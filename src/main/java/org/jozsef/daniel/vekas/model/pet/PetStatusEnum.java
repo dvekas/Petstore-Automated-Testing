@@ -13,7 +13,7 @@ public enum PetStatusEnum {
 
     public static PetStatusEnum getEnumByString(String status){
         for(PetStatusEnum e : PetStatusEnum.values()){
-            if(e.statusName.equals(status)) return e;
+            if(e.statusName.equals(status.toLowerCase())) return e;
         }
         return null;
     }

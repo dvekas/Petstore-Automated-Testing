@@ -1,35 +1,60 @@
 package org.jozsef.daniel.vekas.controller.REST;
 
 
-import io.restassured.RestAssured;
-import io.restassured.http.Method;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
-import java.util.logging.Logger;
-
-import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class RequestHandler {
 
-    public Response sendGetRequest(String URI) {
-        return
+    /**
+     * Sends a POST request, to the given URI,validates the response code, to the expected one then returns the Response
+     *
+     * @param URI Address for the GET request
+     * @param expectedStatusCode The status code, that should be returned from the API
+     * @return The Response object, from the request
+     */
+    public Response sendGetRequest(String URI, int expectedStatusCode) {
+        System.out.println("Sending POST Request to URI: " + URI);
+
+        Response response =
                 given()
                         .headers("Content-Type", "application/json")
                 .when()
-                        .get(URI);
+                        .get(URI)
+                .then()
+                        .statusCode(expectedStatusCode)
+                        .extract().response();
+
+        System.out.println("Endpoint response: " + response.statusLine());
+        System.out.println(response.getBody().prettyPrint());
+        return response;
     }
 
-    public Response sendPostRequest(String URI, String requestBody) {
-        RequestSpecification httpRequest = RestAssured.given()
-                                                        .headers("Content-Type", "application/json")
-                                                        .body(requestBody);
-
+    /**
+     * Sends a POST request, to the given URI, with the given body, validates the response code, to the expected one then returns the Response
+     *
+     * @param URI Address for the POST request
+     * @param requestBody The content of the request
+     * @param expectedStatusCode The status code, that should be returned from the API
+     * @return The Response object, from the request
+     */
+    public Response sendPostRequest(String URI, String requestBody, int expectedStatusCode) {
         System.out.println("Sending POST Request to URI: " + URI);
         System.out.println("Request Body: " + requestBody);
-        Response response = httpRequest.request(Method.POST, URI);
+
+        Response response =
+                given()
+                    .headers("Content-Type", "application/json")
+                    .body(requestBody)
+                .when()
+                    .post(URI)
+                 .then()
+                        .statusCode(expectedStatusCode)
+                        .extract().response();
+
         System.out.println("Endpoint response: " + response.statusLine());
+        System.out.println(response.getBody().prettyPrint());
         return response;
     }
 }
