@@ -29,7 +29,7 @@ public class RequestHandler {
         System.out.println("Sending POST Request to URI: " + URI);
         System.out.println("Request Body: " + requestBody);
         Response response = httpRequest.request(Method.POST, URI);
-        System.out.println(response.statusLine());
+        System.out.println("Endpoint response: " + response.statusLine());
         return response;
     }
 }

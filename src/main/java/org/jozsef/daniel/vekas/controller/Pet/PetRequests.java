@@ -1,14 +1,15 @@
 package org.jozsef.daniel.vekas.controller.Pet;
 import org.jozsef.daniel.vekas.controller.REST.RequestController;
-import org.jozsef.daniel.vekas.model.Pet.Pet;
+import org.jozsef.daniel.vekas.model.pet.Pet;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PetRequests {
 
     static String BASE_URI = "https://petstore.swagger.io/v2/pet";
     RequestController requestController = new RequestController();
 
-    public void createNewPet(Pet petToCreate) {
-        requestController.createNewPet(BASE_URI, petToCreate);
+    public Pet createNewPet(Pet petToCreate) {
 
+        return new PetMapper().mapPetFromResponse(requestController.createNewPet(BASE_URI, petToCreate));
     }
 }
