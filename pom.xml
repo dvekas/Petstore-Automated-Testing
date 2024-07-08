@@ -15,6 +15,7 @@
         <plugin.testng.version>7.10.2</plugin.testng.version>
         <plugin.assertj.version>3.26.0</plugin.assertj.version>
         <plugin.rest-assured.version>5.5.0</plugin.rest-assured.version>
+        <plugin.jackson.version>2.17.2</plugin.jackson.version>
     </properties>
 
     <dependencies>
@@ -40,6 +41,20 @@
             <artifactId>rest-assured</artifactId>
             <version>${plugin.rest-assured.version}</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${plugin.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
