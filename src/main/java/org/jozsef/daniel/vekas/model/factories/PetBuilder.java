@@ -4,7 +4,7 @@ import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
 
 public class PetBuilder {
 
-    Integer petID;
+    String petID;
     String name;
     PetStatusEnum petStatus;
 
@@ -15,7 +15,7 @@ public class PetBuilder {
         return new Pet(name, petStatus);
     }
 
-    public PetBuilder petID(int petID) {
+    public PetBuilder petID(String petID) {
         this.petID = petID;
         return this;
     }

@@ -1,10 +1,13 @@
 package Pet;
 
+import org.apache.http.HttpStatus;
 import org.jozsef.daniel.vekas.controller.Pet.PetRequests;
+import org.jozsef.daniel.vekas.model.APIRespone;
 import org.jozsef.daniel.vekas.model.factories.PetBuilder;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Random;
@@ -13,31 +16,48 @@ import static org.assertj.core.api.Assertions.*;
 
 public class CreateUpdateDeletePetTests {
 
+    private PetRequests petRequestHandler;
     private Pet petToBeCreated;
-    private Pet createdPet;
 
     /**
      * Creates data that is needed to the tests
      */
-    @BeforeClass
-    void initialize() {
+    @BeforeMethod
+    void setUpTestData() {
         petToBeCreated = new PetBuilder()
-                .petID(generateRandomID())
+                .petID(String.valueOf(generateRandomID()))
                 .name("Barkspawn")
                 .petStatus(PetStatusEnum.AVAILABLE)
                 .build();
+
+        petRequestHandler = new PetRequests();
     }
 
     /**
      * WHEN - Trying to create a new pet, via an API call
      * THEN - Creating it is successful with correct data
      */
-    @Test
+    @Test (priority = 1)
     void createNewPetSuccessfulTest() {
         System.out.println("Running: createNewPetSuccessfulTest");
-        createdPet = new PetRequests().createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
 
         assertThat(createdPet).as("Pet Creation Positive Test").withFailMessage("Creation of new Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petToBeCreated);
+        testSuccessfulConsoleMessage();
+    }
+
+    /**
+     * WHEN - Trying to create a new pet, via an API call, with faulty data
+     * THEN - Creating it is unsuccessful
+     */
+    @Test (priority = 2)
+    void createNewPetUnsuccessfulTest() {
+        System.out.println("Running: createNewPetUnsuccessfulTest");
+        petToBeCreated.setId("ERROR");
+        APIRespone response = petRequestHandler.failToCreatePet(petToBeCreated);
+
+        assertThat(response.getCode()).as("Pet Creation Negative Test").isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        assertThat(response.getMessage()).as("Pet Creation Negative Test").isEqualTo("something bad happened");
         testSuccessfulConsoleMessage();
     }
 
@@ -46,12 +66,73 @@ public class CreateUpdateDeletePetTests {
      * WHEN - Requesting the pet via ID
      * THEN - The correct Pet is returned
      */
-    @Test (dependsOnMethods={"createNewPetSuccessfulTest"})
+    @Test (priority = 3)
     void getPetByIDSuccessfulTest() {
         System.out.println("Running: createNewPetSuccessfulTest");
-        Pet requestedPet = new PetRequests().getPetByID(createdPet.getId());
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet requestedPet = petRequestHandler.getPetByID(createdPet.getId());
 
-        assertThat(requestedPet).as("Pet Information Download Positive Test").withFailMessage("Creation of new Pet is unsuccessful").usingRecursiveComparison().isEqualTo(createdPet);
+        assertThat(requestedPet).as("Pet Information Download Positive Test").withFailMessage("Finding Pet is unsuccessful").usingRecursiveComparison().isEqualTo(createdPet);
+        testSuccessfulConsoleMessage();
+    }
+
+    /**
+     * GIVEN - A Pet does not exist in the database, with the given ID
+     * WHEN - Requesting the pet via ID
+     * THEN - 404 code is returned
+     */
+    @Test (priority = 4)
+    void getPetByIDUnsuccessfulTest() {
+        System.out.println("Running: getPetByIDUnsuccessfulTest");
+        getNonExistentPetAndAssertResult(String.valueOf(generateRandomID()));
+        testSuccessfulConsoleMessage();
+    }
+
+    /**
+     * GIVEN - A Pet exists in the database
+     * WHEN - Trying to change the Pet
+     * THEN - The correct Pet is changed, as expected
+     */
+    @Test (priority = 5)
+    void updateExistingPetSuccessfulTest() {
+        System.out.println("Running: updateExistingPetSuccessfulTest");
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        petToBeCreated.setStatus(PetStatusEnum.SOLD);
+        Pet updatedPet = petRequestHandler.updatePet(petToBeCreated);
+
+        assertThat(updatedPet).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petToBeCreated);
+        assertThat(updatedPet.getStatus()).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").isNotEqualTo(createdPet.getStatus());
+        assertThat(updatedPet).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petRequestHandler.getPetByID(petToBeCreated.getId()));
+        testSuccessfulConsoleMessage();
+    }
+
+    /**
+     * GIVEN - A Pet exists in the database
+     * WHEN - Trying to delete the Pet
+     * THEN - The correct Pet is deleted
+     */
+    @Test (priority = 6)
+    void deleteExistingPetSuccessfulTest() {
+        System.out.println("Running: deleteExistingPetSuccessfulTest");
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+
+        APIRespone response = petRequestHandler.deletePet(createdPet);
+        assertThat(response.getCode()).as("Pet Deletion Positive Test").withFailMessage("Pet Deletion Unsuccessful").isEqualTo(HttpStatus.SC_OK);
+        assertThat(response.getMessage()).as("Pet Deletion Positive Test").withFailMessage("Pet Deletion Unsuccessful").isEqualTo(String.valueOf(createdPet.getId()));
+
+        getNonExistentPetAndAssertResult(createdPet.getId());
+        testSuccessfulConsoleMessage();
+    }
+
+    /**
+     * GIVEN - A Pet does not exist in the database, with the given ID
+     * WHEN - Trying to delete the Pet with the non-existent ID
+     * THEN - The 404 error message is returned
+     */
+    @Test (priority = 6)
+    void deleteExistingPetUnsuccessfulTest() {
+        System.out.println("Running: deleteExistingPetUnsuccessfulTest");
+        petRequestHandler.failTpDeletePet(petToBeCreated.getId());
         testSuccessfulConsoleMessage();
     }
 
@@ -69,5 +150,12 @@ public class CreateUpdateDeletePetTests {
     private void testSuccessfulConsoleMessage() {
         System.out.println("Test successful");
         System.out.println("----------------------\n");
+    }
+
+    private void getNonExistentPetAndAssertResult(String petID) {
+        APIRespone response = petRequestHandler.getNonExistentPetByID(petID);
+
+        assertThat(response.getCode()).as("Pet Information Download Negative Test").isEqualTo(1);
+        assertThat(response.getMessage()).as("Pet Information Download Negative Test").isEqualTo("Pet not found");
     }
 }

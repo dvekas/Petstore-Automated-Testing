@@ -5,7 +5,7 @@ public enum PetStatusEnum {
     PENDING("pending"),
     SOLD("sold");
 
-    private String statusName;
+    private final String statusName;
 
     PetStatusEnum(String status) {
         statusName = status;

@@ -1,7 +1,7 @@
 package org.jozsef.daniel.vekas.model.pet;
 
 public class Pet {
-    int id;
+    String id;
     String name;
     PetStatusEnum status;
 
@@ -10,21 +10,25 @@ public class Pet {
         this.status = status;
     }
 
-    public Pet(int id, String name, PetStatusEnum status) {
+    public Pet(String id, String name, PetStatusEnum status) {
         this.id = id;
         this.name = name;
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public PetStatusEnum getStatus() {
         return status;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setStatus(PetStatusEnum status) {
+        this.status = status;
     }
 }

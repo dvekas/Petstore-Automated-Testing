@@ -14,26 +14,20 @@ public class PetMapper {
      * @return The created Pet object
      */
     public Pet mapPetFromResponse(Response response) {
-        int petId;
+        String petId;
         String petName;
         PetStatusEnum petStatus;
 
+        petId = getValueFromResponseBody(response, "id");
         petName = getValueFromResponseBody(response, "name");
-
         petStatus = PetStatusEnum.getEnumByString(getValueFromResponseBody(response, "status"));
 
-        try {
-            petId = Integer.parseInt(getValueFromResponseBody(response, "id"));
-            return new PetBuilder()
+        return new PetBuilder()
                     .petID(petId)
                     .name(petName)
                     .petStatus(petStatus)
                     .build();
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid integer input");
-        }
 
-        return null;
     }
 
     private String getValueFromResponseBody(Response response, String key) {
