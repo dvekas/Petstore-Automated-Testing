@@ -1,7 +1,7 @@
-package org.jozsef.daniel.vekas.controller.Pet;
+package org.jozsef.daniel.vekas.controller.pet;
 
 import io.restassured.response.Response;
-import org.jozsef.daniel.vekas.model.factories.PetBuilder;
+import org.jozsef.daniel.vekas.model.factories.pet.PetBuilder;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
 

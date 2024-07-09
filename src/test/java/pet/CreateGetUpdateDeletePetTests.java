@@ -1,9 +1,9 @@
-package Pet;
+package pet;
 
 import org.apache.http.HttpStatus;
-import org.jozsef.daniel.vekas.controller.Pet.PetRequests;
+import org.jozsef.daniel.vekas.controller.pet.PetRequests;
 import org.jozsef.daniel.vekas.model.APIRespone;
-import org.jozsef.daniel.vekas.model.factories.PetBuilder;
+import org.jozsef.daniel.vekas.model.factories.pet.PetBuilder;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
 import org.testng.annotations.BeforeMethod;
@@ -13,7 +13,7 @@ import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class CreateUpdateDeletePetTests {
+public class CreateGetUpdateDeletePetTests {
 
     private PetRequests petRequestHandler;
     private Pet petToBeCreated;

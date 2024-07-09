@@ -1,5 +1,6 @@
-package org.jozsef.daniel.vekas.controller.Pet;
+package org.jozsef.daniel.vekas.controller.pet;
 import org.apache.http.HttpStatus;
+import org.jozsef.daniel.vekas.controller.ApiResponseMapper;
 import org.jozsef.daniel.vekas.controller.REST.RequestController;
 import org.jozsef.daniel.vekas.model.APIRespone;
 import org.jozsef.daniel.vekas.model.pet.Pet;

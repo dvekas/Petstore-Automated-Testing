@@ -1,4 +1,4 @@
-package org.jozsef.daniel.vekas.controller.Pet;
+package org.jozsef.daniel.vekas.controller;
 
 import io.restassured.response.Response;
 import org.jozsef.daniel.vekas.model.APIRespone;

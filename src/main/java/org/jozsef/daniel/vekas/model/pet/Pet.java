@@ -5,11 +5,6 @@ public class Pet {
     String name;
     PetStatusEnum status;
 
-    public Pet(String name, PetStatusEnum status) {
-        this.name = name;
-        this.status = status;
-    }
-
     public Pet(String id, String name, PetStatusEnum status) {
         this.id = id;
         this.name = name;
