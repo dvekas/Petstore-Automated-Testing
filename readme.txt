@@ -1,5 +1,8 @@
+<b>Swagger Petstore Test Automation Framework & Tests</b>
+https://petstore.swagger.io/
+
 There are multiple ways to run the tests:
-    - Run it directly from the test classes:
+    - Run it directly from the test classes, ind the IDE:
             * src/test/java/pet/CreateUpdateDeletePetTests.class
             * src/test/java/store/CreateGetDeleteOrderTests.class
     - Run the test suite from testng.xml

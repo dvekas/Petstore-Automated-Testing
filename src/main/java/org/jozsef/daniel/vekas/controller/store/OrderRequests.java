@@ -3,7 +3,7 @@ package org.jozsef.daniel.vekas.controller.store;
 import org.apache.http.HttpStatus;
 import org.jozsef.daniel.vekas.controller.ApiResponseMapper;
 import org.jozsef.daniel.vekas.controller.REST.RequestController;
-import org.jozsef.daniel.vekas.model.APIRespone;
+import org.jozsef.daniel.vekas.model.APIResponse;
 import org.jozsef.daniel.vekas.model.store.Order;
 
 public class OrderRequests {
@@ -28,7 +28,7 @@ public class OrderRequests {
      * @param orderID ID of the Order object, we request
      * @return The requested Order, from the response body of the API call
      */
-    public APIRespone getNonExistentOrderByID(String orderID) {
+    public APIResponse getNonExistentOrderByID(String orderID) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND));
@@ -52,7 +52,7 @@ public class OrderRequests {
      * @param orderToCreate The Order to be created
      * @return The created Order, from the response body of the API call
      */
-    public APIRespone failToCreateOrder(Order orderToCreate) {
+    public APIResponse failToCreateOrder(Order orderToCreate) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR));
@@ -64,7 +64,7 @@ public class OrderRequests {
      * @param orderToDelete The Order to be deleted
      * @return API response object
      */
-    public APIRespone deleteOrder(Order orderToDelete) {
+    public APIResponse deleteOrder(Order orderToDelete) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.deleteEntity(BASE_URI + orderToDelete.getId(), HttpStatus.SC_OK));
@@ -75,7 +75,7 @@ public class OrderRequests {
      *
      * @param orderID Non existent OrderID
      */
-    public APIRespone failToDeleteOrder(String orderID) {
+    public APIResponse failToDeleteOrder(String orderID) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND));

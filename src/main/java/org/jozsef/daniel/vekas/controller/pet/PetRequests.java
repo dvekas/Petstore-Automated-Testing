@@ -2,7 +2,7 @@ package org.jozsef.daniel.vekas.controller.pet;
 import org.apache.http.HttpStatus;
 import org.jozsef.daniel.vekas.controller.ApiResponseMapper;
 import org.jozsef.daniel.vekas.controller.REST.RequestController;
-import org.jozsef.daniel.vekas.model.APIRespone;
+import org.jozsef.daniel.vekas.model.APIResponse;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 
 public class PetRequests {
@@ -28,7 +28,7 @@ public class PetRequests {
      * @param petID ID of the Pet object, we request
      * @return The requested Pet, from the response body of the API call
      */
-    public APIRespone getNonExistentPetByID(String petID) {
+    public APIResponse getNonExistentPetByID(String petID) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.getEntity(BASE_URI + petID, HttpStatus.SC_NOT_FOUND));
@@ -52,7 +52,7 @@ public class PetRequests {
      * @param petToCreate The Pet to be created
      * @return The created Pet, from the response body of the API call
      */
-    public APIRespone failToCreatePet(Pet petToCreate) {
+    public APIResponse failToCreatePet(Pet petToCreate) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR));
@@ -76,7 +76,7 @@ public class PetRequests {
      * @param petToDelete The Pet to be deleted
      * @return API response object
      */
-    public APIRespone deletePet(Pet petToDelete) {
+    public APIResponse deletePet(Pet petToDelete) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.deleteEntity(BASE_URI + petToDelete.getId(), HttpStatus.SC_OK));

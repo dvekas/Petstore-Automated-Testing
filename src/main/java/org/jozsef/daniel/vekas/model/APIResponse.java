@@ -1,11 +1,11 @@
 package org.jozsef.daniel.vekas.model;
 
-public class APIRespone {
+public class APIResponse {
     int code;
     String type;
     String message;
 
-    public APIRespone(int code, String type, String message) {
+    public APIResponse(int code, String type, String message) {
         this.code = code;
         this.type = type;
         this.message = message;

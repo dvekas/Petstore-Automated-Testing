@@ -1,8 +1,11 @@
 package store;
 
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jozsef.daniel.vekas.controller.REST.RequestHandler;
 import org.jozsef.daniel.vekas.controller.store.OrderRequests;
-import org.jozsef.daniel.vekas.model.APIRespone;
+import org.jozsef.daniel.vekas.model.APIResponse;
 import org.jozsef.daniel.vekas.model.factories.store.OrderBuilder;
 import org.jozsef.daniel.vekas.model.store.Order;
 import org.testng.annotations.BeforeMethod;
@@ -13,6 +16,8 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateGetDeleteOrderTests {
+
+    private static final Logger LOG = LogManager.getLogger(RequestHandler.class);
 
     Order orderToCreate;
     OrderRequests orderRequestHandler;
@@ -40,7 +45,8 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void createNewOrderSuccessfulTest() {
-        System.out.println("Running: createNewOrderSuccessfulTest");
+        LOG.info("Running: createNewOrderSuccessfulTest");
+
         Order createdOrder = orderRequestHandler.createNewOrder(orderToCreate);
 
         assertThat(createdOrder).as("Order Creation Positive Test").usingRecursiveComparison().isEqualTo(orderToCreate);
@@ -53,13 +59,13 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void createNewOrderUnsuccessfulTest() {
-        System.out.println("Running: createNewOrderUnsuccessfulTest");
+        LOG.info("Running: createNewOrderUnsuccessfulTest");
+
         orderToCreate.setId("ERROR");
-        APIRespone response = orderRequestHandler.failToCreateOrder(orderToCreate);
+        APIResponse response = orderRequestHandler.failToCreateOrder(orderToCreate);
 
         assertThat(response.getCode()).as("Order Creation Negative Test").isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         assertThat(response.getMessage()).as("Order Creation Negative Test").isEqualTo("something bad happened");
-        testSuccessfulConsoleMessage();
     }
 
     /**
@@ -69,7 +75,8 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void getOrderSuccessfulTest() {
-        System.out.println("Running: getOrderSuccessfulTest");
+        LOG.info("Running: getOrderSuccessfulTest");
+
         Order createdOrder = orderRequestHandler.createNewOrder(orderToCreate);
 
         getOrderByIDAndAssertResponse(createdOrder.getId());
@@ -81,7 +88,7 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void getOrderUnsuccessfulTest() {
-        System.out.println("Running: getOrderUnsuccessfulTest");
+        LOG.info("Running: getOrderUnsuccessfulTest");
 
         getNonExistentOrderByIDAndAssertResponse(orderToCreate.getId());
     }
@@ -93,10 +100,10 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void deleteOrderSuccessfulTest() {
-        System.out.println("Running: deleteOrderSuccessfulTest");
+        LOG.info("Running: deleteOrderSuccessfulTest");
         Order createdOrder = orderRequestHandler.createNewOrder(orderToCreate);
 
-        APIRespone response = orderRequestHandler.deleteOrder(createdOrder);
+        APIResponse response = orderRequestHandler.deleteOrder(createdOrder);
         assertThat(response.getCode()).as("Order deletion Positive Test").isEqualTo(HttpStatus.SC_OK);
         assertThat(response.getMessage()).as("Order deletion Positive Test").isEqualTo(createdOrder.getId());
         getNonExistentOrderByIDAndAssertResponse(createdOrder.getId());
@@ -108,9 +115,9 @@ public class CreateGetDeleteOrderTests {
      */
     @Test
     void deleteOrderUnsuccessfulTest() {
-        System.out.println("Running: deleteOrderUnsuccessfulTest");
+        LOG.info("Running: deleteOrderUnsuccessfulTest");
 
-        APIRespone response = orderRequestHandler.failToDeleteOrder(orderToCreate.getId());
+        APIResponse response = orderRequestHandler.failToDeleteOrder(orderToCreate.getId());
         assertThat(response.getCode()).as("Order deletion Positive Test").isEqualTo(HttpStatus.SC_NOT_FOUND);
         assertThat(response.getMessage()).as("Order deletion Positive Test").isEqualTo("Order Not Found");
     }
@@ -118,16 +125,14 @@ public class CreateGetDeleteOrderTests {
     private void getOrderByIDAndAssertResponse(String orderID) {
         Order requestedOrder = orderRequestHandler.getOrderByID(orderID);
 
-        assertThat(requestedOrder).usingRecursiveComparison().isEqualTo(orderToCreate);
-        testSuccessfulConsoleMessage();
+        assertThat(requestedOrder).usingRecursiveComparison().isEqualTo(orderToCreate);;
     }
 
     private void getNonExistentOrderByIDAndAssertResponse(String orderID) {
-        APIRespone response = orderRequestHandler.getNonExistentOrderByID(orderID);
+        APIResponse response = orderRequestHandler.getNonExistentOrderByID(orderID);
 
         assertThat(response.getCode()).isEqualTo(1);
         assertThat(response.getMessage()).isEqualTo("Order not found");
-        testSuccessfulConsoleMessage();
     }
 
     /**
@@ -138,10 +143,5 @@ public class CreateGetDeleteOrderTests {
     private static int generateRandomID() {
         Random rnd = new Random();
         return 1000 + rnd.nextInt(90000);
-    }
-
-    private void testSuccessfulConsoleMessage() {
-        System.out.println("Test successful");
-        System.out.println("----------------------\n");
     }
 }

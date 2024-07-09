@@ -1,7 +1,7 @@
 package org.jozsef.daniel.vekas.controller;
 
 import io.restassured.response.Response;
-import org.jozsef.daniel.vekas.model.APIRespone;
+import org.jozsef.daniel.vekas.model.APIResponse;
 
 public class ApiResponseMapper {
 
@@ -11,7 +11,7 @@ public class ApiResponseMapper {
      * @param response Response object, with a APIResponse's data in the body, as JSON
      * @return The created APIResponse object
      */
-    public APIRespone mapAPIResponseFromResponse(Response response) {
+    public APIResponse mapAPIResponseFromResponse(Response response) {
         int code;
         String type;
         String message;
@@ -20,7 +20,7 @@ public class ApiResponseMapper {
         type = getValueFromResponseBody(response, "type");
         message = getValueFromResponseBody(response, "message");
 
-        return new APIRespone(code, type, message);
+        return new APIResponse(code, type, message);
 
     }
 

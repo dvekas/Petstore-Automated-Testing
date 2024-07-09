@@ -1,11 +1,14 @@
 package org.jozsef.daniel.vekas.controller.REST;
 
-
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
 public class RequestHandler {
+
+    private static final Logger LOG = LogManager.getLogger(RequestHandler.class);
 
     /**
      * Sends a POST request, to the given URI,validates the response code, to the expected one then returns the Response
@@ -15,7 +18,7 @@ public class RequestHandler {
      * @return The Response object, from the request
      */
     public Response sendGetRequest(String URI, int expectedStatusCode) {
-        System.out.println("Sending GET Request to URI: " + URI);
+        LOG.info("Sending GET Request to URI: {}", URI);
 
         Response response =
                 given()
@@ -26,7 +29,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println(response.getBody().prettyPeek());
+        LOG.info(response.getBody().prettyPeek());
         return response;
     }
 
@@ -39,8 +42,8 @@ public class RequestHandler {
      * @return The Response object, from the request
      */
     public Response sendPostRequest(String URI, String requestBody, int expectedStatusCode) {
-        System.out.println("Sending POST Request to URI: " + URI);
-        System.out.println("Request Body: " + requestBody);
+        LOG.info("Sending POST Request to URI: {}", URI);
+        LOG.info("Request Body: {}", requestBody);
 
         Response response =
                 given()
@@ -52,7 +55,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println(response.getBody().prettyPeek());
+        LOG.info(response.getBody().prettyPeek());
         return response;
     }
 
@@ -65,8 +68,8 @@ public class RequestHandler {
      * @return The Response object, from the request
      */
     public Response sendPutRequest(String URI, String requestBody, int expectedStatusCode) {
-        System.out.println("Sending PUT Request to URI: " + URI);
-        System.out.println("Request Body: " + requestBody);
+        LOG.info("Sending PUT Request to URI: {}", URI);
+        LOG.info("Request Body: {}", requestBody);
 
         Response response =
                 given()
@@ -78,7 +81,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println(response.getBody().prettyPeek());
+        LOG.info(response.getBody().prettyPeek());
         return response;
     }
 
@@ -90,7 +93,7 @@ public class RequestHandler {
      * @return The Response object, from the request
      */
     public Response sendDeleteRequest(String URI, int expectedStatusCode) {
-        System.out.println("Sending DELETE Request to URI: " + URI);
+        LOG.info("Sending DELETE Request to URI: {}", URI);
 
         Response response =
                 given()
@@ -101,7 +104,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println(response.getBody().prettyPeek());
+        LOG.info(response.getBody().prettyPeek());
         return response;
     }
 }

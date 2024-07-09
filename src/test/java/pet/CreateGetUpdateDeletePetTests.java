@@ -1,8 +1,11 @@
 package pet;
 
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jozsef.daniel.vekas.controller.REST.RequestHandler;
 import org.jozsef.daniel.vekas.controller.pet.PetRequests;
-import org.jozsef.daniel.vekas.model.APIRespone;
+import org.jozsef.daniel.vekas.model.APIResponse;
 import org.jozsef.daniel.vekas.model.factories.pet.PetBuilder;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
@@ -14,6 +17,8 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.*;
 
 public class CreateGetUpdateDeletePetTests {
+
+    private static final Logger LOG = LogManager.getLogger(RequestHandler.class);
 
     private PetRequests petRequestHandler;
     private Pet petToBeCreated;
@@ -38,7 +43,7 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void createNewPetSuccessfulTest() {
-        System.out.println("Running: createNewPetSuccessfulTest");
+        LOG.info("Running: createNewPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
 
         assertThat(createdPet).as("Pet Creation Positive Test").withFailMessage("Creation of new Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petToBeCreated);
@@ -51,13 +56,12 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void createNewPetUnsuccessfulTest() {
-        System.out.println("Running: createNewPetUnsuccessfulTest");
+        LOG.info("Running: createNewPetUnsuccessfulTest");
         petToBeCreated.setId("ERROR");
-        APIRespone response = petRequestHandler.failToCreatePet(petToBeCreated);
+        APIResponse response = petRequestHandler.failToCreatePet(petToBeCreated);
 
         assertThat(response.getCode()).as("Pet Creation Negative Test").isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         assertThat(response.getMessage()).as("Pet Creation Negative Test").isEqualTo("something bad happened");
-        testSuccessfulConsoleMessage();
     }
 
     /**
@@ -67,7 +71,7 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void getPetByIDSuccessfulTest() {
-        System.out.println("Running: createNewPetSuccessfulTest");
+        LOG.info("Running: getPetByIDSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
         getPetByIDAndAssertResult(createdPet.getId());
     }
@@ -79,9 +83,8 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void getPetByIDUnsuccessfulTest() {
-        System.out.println("Running: getPetByIDUnsuccessfulTest");
+        LOG.info("Running: getPetByIDUnsuccessfulTest");
         getNonExistentPetAndAssertResult(String.valueOf(generateRandomID()));
-        testSuccessfulConsoleMessage();
     }
 
     /**
@@ -91,7 +94,7 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void updateExistingPetSuccessfulTest() {
-        System.out.println("Running: updateExistingPetSuccessfulTest");
+        LOG.info("Running: updateExistingPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
         petToBeCreated.setStatus(PetStatusEnum.SOLD);
         Pet updatedPet = petRequestHandler.updatePet(petToBeCreated);
@@ -109,15 +112,14 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void deleteExistingPetSuccessfulTest() {
-        System.out.println("Running: deleteExistingPetSuccessfulTest");
+        LOG.info("Running: deleteExistingPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
 
-        APIRespone response = petRequestHandler.deletePet(createdPet);
+        APIResponse response = petRequestHandler.deletePet(createdPet);
         assertThat(response.getCode()).as("Pet Deletion Positive Test").withFailMessage("Pet Deletion Unsuccessful").isEqualTo(HttpStatus.SC_OK);
         assertThat(response.getMessage()).as("Pet Deletion Positive Test").withFailMessage("Pet Deletion Unsuccessful").isEqualTo(String.valueOf(createdPet.getId()));
 
         getNonExistentPetAndAssertResult(createdPet.getId());
-        testSuccessfulConsoleMessage();
     }
 
     /**
@@ -127,20 +129,18 @@ public class CreateGetUpdateDeletePetTests {
      */
     @Test
     void deleteExistingPetUnsuccessfulTest() {
-        System.out.println("Running: deleteExistingPetUnsuccessfulTest");
+        LOG.info("Running: deleteExistingPetUnsuccessfulTest");
         petRequestHandler.failTpDeletePet(petToBeCreated.getId());
-        testSuccessfulConsoleMessage();
     }
 
     private void getPetByIDAndAssertResult(String petID){
         Pet requestedPet = petRequestHandler.getPetByID(petID);
 
         assertThat(requestedPet).usingRecursiveComparison().isEqualTo(petToBeCreated);
-        testSuccessfulConsoleMessage();
     }
 
     private void getNonExistentPetAndAssertResult(String petID) {
-        APIRespone response = petRequestHandler.getNonExistentPetByID(petID);
+        APIResponse response = petRequestHandler.getNonExistentPetByID(petID);
 
         assertThat(response.getCode()).isEqualTo(1);
         assertThat(response.getMessage()).isEqualTo("Pet not found");
@@ -154,10 +154,5 @@ public class CreateGetUpdateDeletePetTests {
     private static int generateRandomID() {
         Random rnd = new Random();
         return 1000 + rnd.nextInt(90000);
-    }
-
-    private void testSuccessfulConsoleMessage() {
-        System.out.println("Test successful");
-        System.out.println("----------------------\n");
     }
 }
