@@ -36,7 +36,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Trying to create a new pet, via an API call
      * THEN - Creating it is successful with correct data
      */
-    @Test (priority = 1)
+    @Test
     void createNewPetSuccessfulTest() {
         System.out.println("Running: createNewPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
@@ -49,7 +49,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Trying to create a new pet, via an API call, with faulty data
      * THEN - Creating it is unsuccessful
      */
-    @Test (priority = 2)
+    @Test
     void createNewPetUnsuccessfulTest() {
         System.out.println("Running: createNewPetUnsuccessfulTest");
         petToBeCreated.setId("ERROR");
@@ -65,7 +65,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Requesting the pet via ID
      * THEN - The correct Pet is returned
      */
-    @Test (priority = 3)
+    @Test
     void getPetByIDSuccessfulTest() {
         System.out.println("Running: createNewPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
@@ -77,7 +77,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Requesting the pet via ID
      * THEN - 404 code is returned
      */
-    @Test (priority = 4)
+    @Test
     void getPetByIDUnsuccessfulTest() {
         System.out.println("Running: getPetByIDUnsuccessfulTest");
         getNonExistentPetAndAssertResult(String.valueOf(generateRandomID()));
@@ -89,7 +89,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Trying to change the Pet
      * THEN - The correct Pet is changed, as expected
      */
-    @Test (priority = 5)
+    @Test
     void updateExistingPetSuccessfulTest() {
         System.out.println("Running: updateExistingPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
@@ -107,7 +107,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Trying to delete the Pet
      * THEN - The correct Pet is deleted
      */
-    @Test (priority = 6)
+    @Test
     void deleteExistingPetSuccessfulTest() {
         System.out.println("Running: deleteExistingPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
@@ -125,7 +125,7 @@ public class CreateGetUpdateDeletePetTests {
      * WHEN - Trying to delete the Pet with the non-existent ID
      * THEN - The 404 error message is returned
      */
-    @Test (priority = 6)
+    @Test
     void deleteExistingPetUnsuccessfulTest() {
         System.out.println("Running: deleteExistingPetUnsuccessfulTest");
         petRequestHandler.failTpDeletePet(petToBeCreated.getId());

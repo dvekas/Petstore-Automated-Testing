@@ -26,8 +26,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println("Endpoint response: " + response.statusLine());
-        System.out.println(response.getBody().prettyPrint());
+        System.out.println(response.getBody().prettyPeek());
         return response;
     }
 
@@ -53,8 +52,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println("Endpoint response: " + response.statusLine());
-        System.out.println(response.getBody().prettyPrint());
+        System.out.println(response.getBody().prettyPeek());
         return response;
     }
 
@@ -80,8 +78,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println("Endpoint response: " + response.statusLine());
-        System.out.println(response.getBody().prettyPrint());
+        System.out.println(response.getBody().prettyPeek());
         return response;
     }
 
@@ -104,8 +101,7 @@ public class RequestHandler {
                         .statusCode(expectedStatusCode)
                         .extract().response();
 
-        System.out.println("Endpoint response: " + response.statusLine());
-        System.out.println(response.getBody().prettyPrint());
+        System.out.println(response.getBody().prettyPeek());
         return response;
     }
 }

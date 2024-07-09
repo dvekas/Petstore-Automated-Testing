@@ -75,9 +75,9 @@ public class OrderRequests {
      *
      * @param orderID Non existent OrderID
      */
-    public void failTpDeleteOrder(String orderID) {
+    public APIRespone failToDeleteOrder(String orderID) {
         requestController = new RequestController();
 
-        requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND);
+        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND));
     }
 }
