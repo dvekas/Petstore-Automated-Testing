@@ -1,4 +1,4 @@
-<b>Swagger Petstore Test Automation Framework & Tests</b>
+Swagger Petstore Test Automation Framework & Tests
 https://petstore.swagger.io/
 
 There are multiple ways to run the tests:
