@@ -9,10 +9,7 @@ public class PetBuilder {
     PetStatusEnum petStatus;
 
     public Pet build() {
-        if (petID != null) {
-            return new Pet(petID, name, petStatus);
-        }
-        return new Pet(name, petStatus);
+        return new Pet(petID, name, petStatus);
     }
 
     public PetBuilder petID(String petID) {
