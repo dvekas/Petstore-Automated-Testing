@@ -42,7 +42,7 @@ public class CreateGetUpdateDeletePetTests {
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
 
         assertThat(createdPet).as("Pet Creation Positive Test").withFailMessage("Creation of new Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petToBeCreated);
-        testSuccessfulConsoleMessage();
+        getPetByIDAndAssertResult(createdPet.getId());
     }
 
     /**
@@ -69,10 +69,7 @@ public class CreateGetUpdateDeletePetTests {
     void getPetByIDSuccessfulTest() {
         System.out.println("Running: createNewPetSuccessfulTest");
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
-        Pet requestedPet = petRequestHandler.getPetByID(createdPet.getId());
-
-        assertThat(requestedPet).as("Pet Information Download Positive Test").withFailMessage("Finding Pet is unsuccessful").usingRecursiveComparison().isEqualTo(createdPet);
-        testSuccessfulConsoleMessage();
+        getPetByIDAndAssertResult(createdPet.getId());
     }
 
     /**
@@ -102,7 +99,7 @@ public class CreateGetUpdateDeletePetTests {
         assertThat(updatedPet).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petToBeCreated);
         assertThat(updatedPet.getStatus()).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").isNotEqualTo(createdPet.getStatus());
         assertThat(updatedPet).as("Pet Information Update Positive Test").withFailMessage("Updating the Pet is unsuccessful").usingRecursiveComparison().isEqualTo(petRequestHandler.getPetByID(petToBeCreated.getId()));
-        testSuccessfulConsoleMessage();
+        getPetByIDAndAssertResult(updatedPet.getId());
     }
 
     /**
@@ -135,6 +132,19 @@ public class CreateGetUpdateDeletePetTests {
         testSuccessfulConsoleMessage();
     }
 
+    private void getPetByIDAndAssertResult(String petID){
+        Pet requestedPet = petRequestHandler.getPetByID(petID);
+
+        assertThat(requestedPet).usingRecursiveComparison().isEqualTo(petToBeCreated);
+        testSuccessfulConsoleMessage();
+    }
+
+    private void getNonExistentPetAndAssertResult(String petID) {
+        APIRespone response = petRequestHandler.getNonExistentPetByID(petID);
+
+        assertThat(response.getCode()).isEqualTo(1);
+        assertThat(response.getMessage()).isEqualTo("Pet not found");
+    }
 
     /**
      * Generates a random number, between 1000 and 90000, to serve as ID.
@@ -149,12 +159,5 @@ public class CreateGetUpdateDeletePetTests {
     private void testSuccessfulConsoleMessage() {
         System.out.println("Test successful");
         System.out.println("----------------------\n");
-    }
-
-    private void getNonExistentPetAndAssertResult(String petID) {
-        APIRespone response = petRequestHandler.getNonExistentPetByID(petID);
-
-        assertThat(response.getCode()).as("Pet Information Download Negative Test").isEqualTo(1);
-        assertThat(response.getMessage()).as("Pet Information Download Negative Test").isEqualTo("Pet not found");
     }
 }
