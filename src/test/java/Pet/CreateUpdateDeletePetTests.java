@@ -7,7 +7,6 @@ import org.jozsef.daniel.vekas.model.factories.PetBuilder;
 import org.jozsef.daniel.vekas.model.pet.Pet;
 import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Random;
