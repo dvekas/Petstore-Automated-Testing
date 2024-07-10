@@ -12,7 +12,7 @@ There are multiple ways to run the tests:
 
 Used technologies:
     - language: Java (version: 22.01)
-    - build tool: Maven
+    - build tool: Maven (version: 3.9.6)
     - test framework: TestNG (version: 7.10.2)
     - AssertJ (version: 3.26.0)
     - Jackson Databind (version: 2.17.2)
