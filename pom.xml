@@ -44,6 +44,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>${plugin.jackson.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${plugin.jackson.version}</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
         <dependency>

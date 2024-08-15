@@ -1,17 +1,20 @@
 package pet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvekas.controller.REST.RequestHandler;
 import org.dvekas.controller.pet.PetRequests;
 import org.dvekas.model.APIResponse;
-import org.dvekas.model.factories.pet.PetBuilder;
 import org.dvekas.model.pet.Pet;
 import org.dvekas.model.pet.PetStatusEnum;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,20 +22,24 @@ import static org.assertj.core.api.Assertions.*;
 public class CreateGetUpdateDeletePetTests {
 
     private static final Logger LOG = LogManager.getLogger(RequestHandler.class);
+    private static final String petYamlFilePath = "src/test/resources/testdata/yaml/TestPetData.yaml";
 
     private PetRequests petRequestHandler;
     private Pet petToBeCreated;
 
     /**
-     * Creates data that is needed to the tests
+     * Loads in data that is needed to the tests
      */
     @BeforeMethod
     void setUpTestData() {
-        petToBeCreated = new PetBuilder()
-                .id(String.valueOf(generateRandomID()))
-                .name("Barkspawn")
-                .petStatus(PetStatusEnum.AVAILABLE)
-                .build();
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        mapper.findAndRegisterModules();
+
+        try {
+            petToBeCreated = mapper.readValue(new File(petYamlFilePath), Pet.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         petRequestHandler = new PetRequests();
     }

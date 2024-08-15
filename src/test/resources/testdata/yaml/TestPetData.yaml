@@ -1,0 +1,10 @@
+category:
+    id: 0
+    name: dog
+name: Dogmeat,
+tags:
+  - id: 0
+    name: Medical Tag
+  - id: 2
+    name: Lineage Tag
+status: AVAILABLE
