@@ -1,6 +1,6 @@
-package org.jozsef.daniel.vekas.model.factories.store;
+package org.dvekas.model.factories.store;
 
-import org.jozsef.daniel.vekas.model.store.Order;
+import org.dvekas.model.store.Order;
 
 public class OrderBuilder {
 

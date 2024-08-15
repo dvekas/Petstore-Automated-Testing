@@ -1,4 +1,4 @@
-package org.jozsef.daniel.vekas.model.store;
+package org.dvekas.model.store;
 
 public class Order {
     String id;

@@ -3,11 +3,11 @@ package store;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jozsef.daniel.vekas.controller.REST.RequestHandler;
-import org.jozsef.daniel.vekas.controller.store.OrderRequests;
-import org.jozsef.daniel.vekas.model.APIResponse;
-import org.jozsef.daniel.vekas.model.factories.store.OrderBuilder;
-import org.jozsef.daniel.vekas.model.store.Order;
+import org.dvekas.controller.REST.RequestHandler;
+import org.dvekas.controller.store.OrderRequests;
+import org.dvekas.model.APIResponse;
+import org.dvekas.model.factories.store.OrderBuilder;
+import org.dvekas.model.store.Order;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

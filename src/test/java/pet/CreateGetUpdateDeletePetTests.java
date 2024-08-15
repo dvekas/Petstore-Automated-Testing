@@ -3,12 +3,12 @@ package pet;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jozsef.daniel.vekas.controller.REST.RequestHandler;
-import org.jozsef.daniel.vekas.controller.pet.PetRequests;
-import org.jozsef.daniel.vekas.model.APIResponse;
-import org.jozsef.daniel.vekas.model.factories.pet.PetBuilder;
-import org.jozsef.daniel.vekas.model.pet.Pet;
-import org.jozsef.daniel.vekas.model.pet.PetStatusEnum;
+import org.dvekas.controller.REST.RequestHandler;
+import org.dvekas.controller.pet.PetRequests;
+import org.dvekas.model.APIResponse;
+import org.dvekas.model.factories.pet.PetBuilder;
+import org.dvekas.model.pet.Pet;
+import org.dvekas.model.pet.PetStatusEnum;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -29,7 +29,7 @@ public class CreateGetUpdateDeletePetTests {
     @BeforeMethod
     void setUpTestData() {
         petToBeCreated = new PetBuilder()
-                .petID(String.valueOf(generateRandomID()))
+                .id(String.valueOf(generateRandomID()))
                 .name("Barkspawn")
                 .petStatus(PetStatusEnum.AVAILABLE)
                 .build();
@@ -130,7 +130,7 @@ public class CreateGetUpdateDeletePetTests {
     @Test
     void deleteExistingPetUnsuccessfulTest() {
         LOG.info("Running: deleteExistingPetUnsuccessfulTest");
-        petRequestHandler.failTpDeletePet(petToBeCreated.getId());
+        petRequestHandler.failToDeletePet(petToBeCreated.getId());
     }
 
     private void getPetByIDAndAssertResult(String petID){

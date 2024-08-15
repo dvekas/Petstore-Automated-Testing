@@ -1,10 +1,10 @@
-package org.jozsef.daniel.vekas.controller.store;
+package org.dvekas.controller.store;
 
 import org.apache.http.HttpStatus;
-import org.jozsef.daniel.vekas.controller.ApiResponseMapper;
-import org.jozsef.daniel.vekas.controller.REST.RequestController;
-import org.jozsef.daniel.vekas.model.APIResponse;
-import org.jozsef.daniel.vekas.model.store.Order;
+import org.dvekas.controller.REST.RequestController;
+import org.dvekas.controller.ApiResponseMapper;
+import org.dvekas.model.APIResponse;
+import org.dvekas.model.store.Order;
 
 public class OrderRequests {
     static String BASE_URI = "https://petstore.swagger.io/v2/store/order/";

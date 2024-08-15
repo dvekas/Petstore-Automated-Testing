@@ -1,7 +1,7 @@
-package org.jozsef.daniel.vekas.controller;
+package org.dvekas.controller;
 
 import io.restassured.response.Response;
-import org.jozsef.daniel.vekas.model.APIResponse;
+import org.dvekas.model.APIResponse;
 
 public class ApiResponseMapper {
 

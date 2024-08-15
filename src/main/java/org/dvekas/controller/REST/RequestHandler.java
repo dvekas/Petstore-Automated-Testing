@@ -1,5 +1,7 @@
-package org.jozsef.daniel.vekas.controller.REST;
+package org.dvekas.controller.REST;
 
+import groovyjarjarantlr4.v4.runtime.misc.Nullable;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,14 +13,14 @@ public class RequestHandler {
     private static final Logger LOG = LogManager.getLogger(RequestHandler.class);
 
     /**
-     * Sends a POST request, to the given URI,validates the response code, to the expected one then returns the Response
+     * Sends a POST request, to the given URI,validates the response code, to the expected one then returns the Response.
      *
-     * @param URI Address for the GET request
-     * @param expectedStatusCode The status code, that should be returned from the API
-     * @return The Response object, from the request
+     * @param URI Address for the GET request.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
      */
     public Response sendGetRequest(String URI, int expectedStatusCode) {
-        LOG.info("Sending GET Request to URI: {}", URI);
+        logRequest(Method.GET, URI, null);
 
         Response response =
                 given()
@@ -34,16 +36,15 @@ public class RequestHandler {
     }
 
     /**
-     * Sends a POST request, to the given URI, with the given body, validates the response code, to the expected one then returns the Response
+     * Sends a POST request, to the given URI, with the given body, validates the response code, to the expected one then returns the Response.
      *
-     * @param URI Address for the POST request
-     * @param requestBody The content of the request
-     * @param expectedStatusCode The status code, that should be returned from the API
-     * @return The Response object, from the request
+     * @param URI Address for the POST request.
+     * @param requestBody The content of the request.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
      */
     public Response sendPostRequest(String URI, String requestBody, int expectedStatusCode) {
-        LOG.info("Sending POST Request to URI: {}", URI);
-        LOG.info("Request Body: {}", requestBody);
+        logRequest(Method.POST, URI, requestBody);
 
         Response response =
                 given()
@@ -60,16 +61,15 @@ public class RequestHandler {
     }
 
     /**
-     * Sends a PUT request, to the given URI, with the given body, validates the response code, to the expected one then returns the Response
+     * Sends a PUT request, to the given URI, with the given body, validates the response code, to the expected one then returns the Response.
      *
-     * @param URI Address for the POST request
-     * @param requestBody The content of the request
-     * @param expectedStatusCode The status code, that should be returned from the API
-     * @return The Response object, from the request
+     * @param URI Address for the POST request.
+     * @param requestBody The content of the request.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
      */
     public Response sendPutRequest(String URI, String requestBody, int expectedStatusCode) {
-        LOG.info("Sending PUT Request to URI: {}", URI);
-        LOG.info("Request Body: {}", requestBody);
+        logRequest(Method.PUT, URI, requestBody);
 
         Response response =
                 given()
@@ -86,14 +86,14 @@ public class RequestHandler {
     }
 
     /**
-     * Sends a DELETE request, to the given URI, validates the response code, to the expected one then returns the Response
+     * Sends a DELETE request, to the given URI, validates the response code, to the expected one then returns the Response.
      *
-     * @param URI Address for the DELETE request
-     * @param expectedStatusCode The status code, that should be returned from the API
-     * @return The Response object, from the request
+     * @param URI Address for the DELETE request.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
      */
     public Response sendDeleteRequest(String URI, int expectedStatusCode) {
-        LOG.info("Sending DELETE Request to URI: {}", URI);
+        logRequest(Method.DELETE, URI, null);
 
         Response response =
                 given()
@@ -106,5 +106,19 @@ public class RequestHandler {
 
         LOG.info(response.getBody().prettyPeek());
         return response;
+    }
+
+    /**
+     * Logs information about the HTTP request to the console.
+     *
+     * @param requestType Type of the HTTP request.
+     * @param URI URI, where the request is sent.
+     * @param requestBody Body of the request. Can be 'null'.
+     */
+    private void logRequest(Method requestType,  String URI, @Nullable String requestBody) {
+        LOG.info("Sending {} Request to URI: {}", requestType, URI);
+        if (requestBody != null) {
+            LOG.info("Request Body: {}", requestBody);
+        }
     }
 }

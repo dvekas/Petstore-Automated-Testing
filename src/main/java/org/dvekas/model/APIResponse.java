@@ -1,4 +1,4 @@
-package org.jozsef.daniel.vekas.model;
+package org.dvekas.model;
 
 public class APIResponse {
     int code;

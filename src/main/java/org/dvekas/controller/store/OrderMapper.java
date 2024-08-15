@@ -1,8 +1,8 @@
-package org.jozsef.daniel.vekas.controller.store;
+package org.dvekas.controller.store;
 
 import io.restassured.response.Response;
-import org.jozsef.daniel.vekas.model.factories.store.OrderBuilder;
-import org.jozsef.daniel.vekas.model.store.Order;
+import org.dvekas.model.factories.store.OrderBuilder;
+import org.dvekas.model.store.Order;
 
 public class OrderMapper {
 
