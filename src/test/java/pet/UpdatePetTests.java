@@ -21,7 +21,7 @@ public class UpdatePetTests extends PetTestBase {
         LOG.info("Running: updateExistingPetSuccessfulTest");
 
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
-        petToBeCreated.setStatus(PetStatusEnum.SOLD);
+        petToBeCreated.setStatus(PetStatusEnum.sold);
         Pet updatedPet = petRequestHandler.updatePet(petToBeCreated);
 
         assertThat(updatedPet)

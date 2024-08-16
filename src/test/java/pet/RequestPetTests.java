@@ -3,6 +3,10 @@ package pet;
 import org.dvekas.model.pet.Pet;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class RequestPetTests  extends PetTestBase {
 
     /**
@@ -29,6 +33,31 @@ public class RequestPetTests  extends PetTestBase {
         LOG.info("Running: getPetByIDUnsuccessfulTest");
 
         getNonExistentPetAndAssertResult(String.valueOf(generateRandomNumber()));
+    }
+
+    /**
+     * GIVEN - A Pet exist in the database, with the given status
+     * WHEN - Requesting the list of pets by status
+     * THEN - The Pet is found in the returned list
+     */
+    @Test
+    void getPetByStatusSuccessfulTest() {
+        LOG.info("Running: getPetByStatusSuccessfulTest");
+
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        List<Pet> pets = petRequestHandler.getPetsByStatus(createdPet.getStatus());
+
+        boolean doesListContainCreatedPet = pets.stream().
+                anyMatch(pet ->
+                        createdPet.getId().equals(pet.getId()) &&
+                        createdPet.getName().equals(pet.getName()) &&
+                        createdPet.getStatus().equals(pet.getStatus())
+                );
+
+        assertThat(doesListContainCreatedPet)
+                .as("Get Pets By Status Successful Test")
+                .withFailMessage("Created Pet is not found in List")
+                .isTrue();
     }
 
 }

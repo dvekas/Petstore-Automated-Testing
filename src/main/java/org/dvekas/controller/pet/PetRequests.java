@@ -1,4 +1,6 @@
 package org.dvekas.controller.pet;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -6,9 +8,12 @@ import org.dvekas.controller.REST.RequestController;
 import org.dvekas.controller.ApiResponseMapper;
 import org.dvekas.model.APIResponse;
 import org.dvekas.model.pet.Pet;
+import org.dvekas.model.pet.PetStatusEnum;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class PetRequests {
 
@@ -25,6 +30,28 @@ public class PetRequests {
         requestController = new RequestController();
 
         return mapPetFromResponse(requestController.getEntity(BASE_URI + petID, HttpStatus.SC_OK));
+    }
+
+    /**
+     * Requests a list of Pets from the API based on status.
+     *
+     * @param petStatus The status the returned pets have.
+     * @return List of Pet objects.
+     */
+    public List<Pet> getPetsByStatus(PetStatusEnum petStatus) {
+        String findByStatusURI = "findByStatus?status=";
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Pet> pets;
+
+        String responseBody = requestController.getEntity(BASE_URI + findByStatusURI + petStatus.getStatusName(),HttpStatus.SC_OK).getBody().asPrettyString();
+
+        try {
+            pets = Arrays.asList(objectMapper.readValue(responseBody, Pet[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return pets;
     }
 
     /**
