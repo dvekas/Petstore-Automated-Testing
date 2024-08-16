@@ -2,13 +2,18 @@
 https://petstore.swagger.io/
 
 There are multiple ways to run the tests:
-    - Run it directly from the test classes, ind the IDE:
-            * src/test/java/pet/CreateUpdateDeletePetTests.class
-            * src/test/java/store/CreateGetDeleteOrderTests.class
-    - Run the test suite from testng.xml
-    - Run with Maven command. They run with "mvn clean install" by default,
-            but, for specifically running of the test suite use: "mvn test -DxmlFilePath=src/testng.xml"
+    - Run it directly from the test classes, in the IDE:
+            * src/test/java/pet/...
+            * src/test/java/store/...
+    - Run the test suite from testng xml files, in the IDE:
+            * src/testng.xml
+            * src/testsuites/petSuite.xml
+    - Run with Maven command:
+            * all tests run with "mvn clean install" by default
+            * running all the tests directly: "mvn test -DxmlFilePath=src/testng.xml"
+            * running the Pet test suite only: "mvn test -DxmlFilePath=src/testsuites/petSuite.xml"
 
+"mvn clean install" is needed before running any tests.
 
 Used technologies:
     - language: Java (version: 22.01)
@@ -18,3 +23,4 @@ Used technologies:
     - Jackson Databind (version: 2.17.2)
     - Log4j (version: 2.23.1)
     - Rest Assured (version: 5.5.0)
+    - Lombok (version: 1.18.34)

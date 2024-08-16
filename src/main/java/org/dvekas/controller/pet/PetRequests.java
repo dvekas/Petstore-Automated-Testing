@@ -7,6 +7,7 @@ import org.dvekas.controller.ApiResponseMapper;
 import org.dvekas.model.APIResponse;
 import org.dvekas.model.pet.Pet;
 
+import java.io.File;
 import java.io.IOException;
 
 public class PetRequests {
@@ -30,7 +31,7 @@ public class PetRequests {
      * Requests a Pet object from the API.
      *
      * @param petID ID of the Pet object, we request.
-     * @return The requested Pet, from the response body of the API call.
+     * @return API response object.
      */
     public APIResponse getNonExistentPetByID(String petID) {
         requestController = new RequestController();
@@ -54,12 +55,26 @@ public class PetRequests {
      * Sends the Pet object, into the API caller methods, to unsuccessfully create a new Pet entity.
      *
      * @param petToCreate The Pet to be created.
-     * @return The created Pet, from the response body of the API call.
+     * @return API response object.
      */
     public APIResponse failToCreatePet(Pet petToCreate) {
         requestController = new RequestController();
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR));
+    }
+
+    /**
+     * Sends the given file to the API caller methods, to successfully upload it to the database.
+     *
+     * @param petID ID of the pet, we want to upload the picture to.
+     * @param file The file we want to upload.
+     * @param additionalMetaData Additional metadata, for the upload.
+     * @return API response object.
+     */
+    public APIResponse uploadPictureToPet(String petID, File file, String additionalMetaData) {
+        requestController = new RequestController();
+
+        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.uploadFile(BASE_URI + petID + "/uploadImage", file, HttpStatus.SC_OK, additionalMetaData));
     }
 
     /**

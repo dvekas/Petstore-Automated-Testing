@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 
+import java.io.File;
+
 public class RequestController {
 
     /**
@@ -28,6 +30,18 @@ public class RequestController {
      */
     public <T> Response createNewEntity(String URL, T Object, int expectedStatusCode) {
         return new RequestHandler().sendPostRequest(URL, mapObjectToJSON(Object), expectedStatusCode);
+    }
+
+    /**
+     * Uploads a new file, by using a POST call to the API.
+     *
+     * @param URL Address for the POST request.
+     * @param file The file to be uploaded.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
+     */
+    public Response uploadFile(String URL, File file, int expectedStatusCode, String additionalMetadata) {
+        return new RequestHandler().sendPostFileUploadRequest(URL, file, expectedStatusCode, additionalMetadata);
     }
 
     /**

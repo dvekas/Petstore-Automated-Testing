@@ -1,9 +1,9 @@
 category:
-    id: 0
+    id: 1
     name: dog
 name: Dogmeat,
 tags:
-  - id: 0
+  - id: 1
     name: Medical Tag
   - id: 2
     name: Lineage Tag

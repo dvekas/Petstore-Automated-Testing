@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Order-Suite" >
+    <test name="PetStore - Order Tests" >
+        <classes>
+            <class name="store.CreateGetDeleteOrderTests" />
+        </classes>
+    </test>
+</suite>

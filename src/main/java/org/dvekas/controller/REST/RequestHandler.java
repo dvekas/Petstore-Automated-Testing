@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+
 import static io.restassured.RestAssured.given;
 
 public class RequestHandler {
@@ -53,6 +55,33 @@ public class RequestHandler {
                 .when()
                     .post(URI)
                  .then()
+                        .statusCode(expectedStatusCode)
+                        .extract().response();
+
+        LOG.info(response.getBody().prettyPeek());
+        return response;
+    }
+
+    /**
+     * Sends a POST request, to the given URI, with the given file, validates the response code, to the expected one then returns the Response.
+     *
+     * @param URI Address for the POST request.
+     * @param file The file to send.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
+     */
+    public Response sendPostFileUploadRequest(String URI, File file, int expectedStatusCode, String additionalMetadata) {
+        logRequest(Method.POST, URI, null);
+        LOG.info("File to be POSTed: {}", file.getAbsolutePath());
+
+        Response response =
+                given()
+                        .headers("Content-Type", "multipart/form-data")
+                        .multiPart("file", file)
+                        .multiPart("additionalMetadata", additionalMetadata)
+                .when()
+                        .post(URI)
+                .then()
                         .statusCode(expectedStatusCode)
                         .extract().response();
 

@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreatePetTests extends PetTestBase{
+public class CreatePetTests extends PetTestBase {
 
     /**
      * WHEN - Trying to create a new pet, via an API call
@@ -16,6 +16,7 @@ public class CreatePetTests extends PetTestBase{
     @Test
     void createNewPetSuccessfulTest() {
         LOG.info("Running: createNewPetSuccessfulTest");
+
         Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
 
         assertThat(createdPet)
@@ -35,6 +36,7 @@ public class CreatePetTests extends PetTestBase{
     @Test
     void createNewPetUnsuccessfulTest() {
         LOG.info("Running: createNewPetUnsuccessfulTest");
+
         petToBeCreated.setId("ERROR");
         APIResponse response = petRequestHandler.failToCreatePet(petToBeCreated);
 
@@ -42,17 +44,4 @@ public class CreatePetTests extends PetTestBase{
         assertThat(response.getMessage()).as("Pet Creation Negative Test").isEqualTo("something bad happened");
     }
 
-    /**
-     * Downloads a Pet (via ID) from the API and asserts if it is created as planned.
-     *
-     * @param petID ID of the pet to be tested.
-     */
-    private void getPetByIDAndAssertResult(String petID){
-        Pet requestedPet = petRequestHandler.getPetByID(petID);
-
-        assertThat(requestedPet)
-                .usingRecursiveComparison()
-                .ignoringFields("id")
-                .isEqualTo(petToBeCreated);
-    }
 }

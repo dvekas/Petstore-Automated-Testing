@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Pet-Suite" >
+    <test name="PetStore - Pet Tests" >
+        <classes>
+            <class name="pet.CreatePetTests" />
+            <class name="pet.RequestPetTests" />
+            <class name="pet.UpdatePetTests" />
+            <class name="pet.DeletePetTests" />
+        </classes>
+    </test>
+</suite>
