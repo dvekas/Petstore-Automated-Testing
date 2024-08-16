@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Test-Suite" >
     <suite-files>
-        <suite-file path="testsuites/petSuite.xml" />
-        <suite-file path="testsuites/orderSuite.xml" />
+        <suite-file path="testSuites/petSuite.xml" />
+        <suite-file path="testSuites/orderSuite.xml" />
     </suite-files>
 </suite>
 

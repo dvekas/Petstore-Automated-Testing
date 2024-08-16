@@ -7,11 +7,11 @@ There are multiple ways to run the tests:
             * src/test/java/store/...
     - Run the test suite from testng xml files, in the IDE:
             * src/testng.xml
-            * src/testsuites/petSuite.xml
+            * src/testSuites/petSuite.xml
     - Run with Maven command:
             * all tests run with "mvn clean install" by default
             * running all the tests directly: "mvn test -DxmlFilePath=src/testng.xml"
-            * running the Pet test suite only: "mvn test -DxmlFilePath=src/testsuites/petSuite.xml"
+            * running the Pet test suite only: "mvn test -DxmlFilePath=src/testSuites/petSuite.xml"
 
 "mvn clean install" is needed before running any tests.
 
