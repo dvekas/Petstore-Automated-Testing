@@ -1,8 +1,5 @@
 package org.dvekas.model;
 
-import lombok.Getter;
-
-@Getter
 public class APIResponse {
     int code;
     String type;
@@ -14,4 +11,15 @@ public class APIResponse {
         this.message = message;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

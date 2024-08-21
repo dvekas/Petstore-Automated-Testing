@@ -107,39 +107,13 @@ public class PetRequests {
     /**
      * Sends the Pet object, into the API caller methods, to create or update a Pet entity.
      *
-     * @param petToUpdate The Pet to be created or updated.
+     * @param updatedPet The Pet to be created or updated.
      * @return The created or updated Pet, from the response body of the API call.
      */
-    public Pet updatePet(Pet petToUpdate) {
+    public Pet updatePet(Pet updatedPet) {
         requestController = new RequestController();
 
-        return mapPetFromResponse(requestController.createOrUpdateEntity(BASE_URI, petToUpdate, HttpStatus.SC_OK));
-    }
-
-    /**
-     * Updates the given Pet entity, via POST API call, using FormData body format
-     *
-     * @param petToUpdate The Pet to be created or updated.
-     * @return API response object.
-     */
-    public APIResponse updatePetWithFormData(Pet petToUpdate) {
-        requestController = new RequestController();
-        String formData = "name=" + petToUpdate.getName() + "&status=" + petToUpdate.getStatus().getStatusName();
-
-        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.updateEntityViaPostRequest(BASE_URI + petToUpdate.getId(), formData, HttpStatus.SC_OK));
-    }
-
-    /**
-     * Tries to update a non-existent pet, via POST request, and fails.
-     *
-     * @param nonExistentPetID ID of a non-existent Pet.
-     * @return API response object.
-     */
-    public APIResponse failToUpdatePetWithFormData(String nonExistentPetID) {
-        requestController = new RequestController();
-        String formData = "name=ERROR&status=" + PetStatusEnum.sold.getStatusName();
-
-        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.updateEntityViaPostRequest(BASE_URI + nonExistentPetID, formData, HttpStatus.SC_NOT_FOUND));
+        return mapPetFromResponse(requestController.createOrUpdateEntity(BASE_URI, updatedPet, HttpStatus.SC_OK));
     }
 
     /**

@@ -43,15 +43,14 @@ public class RequestHandler {
      * @param URI Address for the POST request.
      * @param requestBody The content of the request.
      * @param expectedStatusCode The status code, that should be returned from the API.
-     * @param contentType The contentType of the body, that will be sent as part of the request.
      * @return The Response object, from the request.
      */
-    public Response sendPostRequest(String URI, String requestBody, int expectedStatusCode, ContentTypeEnum contentType) {
+    public Response sendPostRequest(String URI, String requestBody, int expectedStatusCode) {
         logRequest(Method.POST, URI, requestBody);
 
         Response response =
                 given()
-                    .headers("Content-Type", contentType.getContentTypeString())
+                    .headers("Content-Type", "application/json")
                     .body(requestBody)
                 .when()
                     .post(URI)
@@ -151,5 +150,4 @@ public class RequestHandler {
             LOG.info("Request Body: {}", requestBody);
         }
     }
-
 }
