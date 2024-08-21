@@ -27,4 +27,5 @@ public class ApiResponseMapper {
     private String getValueFromResponseBody(Response response, String key) {
         return response.getBody().jsonPath().getString(key);
     }
+
 }
