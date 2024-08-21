@@ -40,8 +40,8 @@ public class DeletePetTests extends PetTestBase {
      * THEN - The 404 error message is returned
      */
     @Test
-    void deleteExistingPetUnsuccessfulTest() {
-        LOG.info("Running: deleteExistingPetUnsuccessfulTest");
+    void deleteNonExistingPetUnsuccessfulTest() {
+        LOG.info("Running: deleteNonExistingPetUnsuccessfulTest");
 
         petRequestHandler.failToDeletePet(String.valueOf(generateRandomNumber()));
     }

@@ -29,7 +29,7 @@ public class RequestController {
      * @return The Response object, from the request.
      */
     public <T> Response createNewEntity(String URL, T Object, int expectedStatusCode) {
-        return new RequestHandler().sendPostRequest(URL, mapObjectToJSON(Object), expectedStatusCode);
+        return new RequestHandler().sendPostRequest(URL, mapObjectToJSON(Object), expectedStatusCode, ContentTypeEnum.JSON);
     }
 
     /**
@@ -54,6 +54,18 @@ public class RequestController {
      */
     public <T> Response createOrUpdateEntity(String URL, T Object, int expectedStatusCode) {
         return new RequestHandler().sendPutRequest(URL, mapObjectToJSON(Object), expectedStatusCode);
+    }
+
+    /**
+     * Updates Entity, via POST request, with Form Data in the body of the request.
+     *
+     * @param URL Address for the PUT request.
+     * @param formData Update data for the request.
+     * @param expectedStatusCode The status code, that should be returned from the API.
+     * @return The Response object, from the request.
+     */
+    public Response updateEntityViaPostAndFormData(String URL, String formData, int expectedStatusCode) {
+        return new RequestHandler().sendPostRequest(URL, formData, expectedStatusCode, ContentTypeEnum.FORM_DATA);
     }
 
     /**

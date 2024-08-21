@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Category {
 
     @JsonProperty("id")
-    int id;
+    String id;
     @JsonProperty("name")
     String name;
 

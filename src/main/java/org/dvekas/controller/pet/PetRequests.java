@@ -1,6 +1,5 @@
 package org.dvekas.controller.pet;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -107,13 +106,39 @@ public class PetRequests {
     /**
      * Sends the Pet object, into the API caller methods, to create or update a Pet entity.
      *
-     * @param updatedPet The Pet to be created or updated.
+     * @param petToUpdate The Pet to be created or updated.
      * @return The created or updated Pet, from the response body of the API call.
      */
-    public Pet updatePet(Pet updatedPet) {
+    public Pet updatePet(Pet petToUpdate) {
         requestController = new RequestController();
 
-        return mapPetFromResponse(requestController.createOrUpdateEntity(BASE_URI, updatedPet, HttpStatus.SC_OK));
+        return mapPetFromResponse(requestController.createOrUpdateEntity(BASE_URI, petToUpdate, HttpStatus.SC_OK));
+    }
+
+    /**
+     * Updates a Pet, with Form Data
+     *
+     * @param petToUpdate The Pet to be created or updated.
+     * @return  API response object.
+     */
+    public APIResponse updatePetViaPost(Pet petToUpdate) {
+        requestController = new RequestController();
+        String formData = "name=" + petToUpdate.getName() + "&status=" + petToUpdate.getStatus().getStatusName();
+
+        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.updateEntityViaPostAndFormData(BASE_URI + petToUpdate.getId(), formData, HttpStatus.SC_OK));
+    }
+
+    /**
+     * Tries to update a non-existent PET
+     *
+     * @param nonExistentPetID ID of the non-existent Pet.
+     * @return  API response object.
+     */
+    public APIResponse failToUpdatePetViaPost(String nonExistentPetID) {
+        requestController = new RequestController();
+        String formData = "name=ERROR&status=" + PetStatusEnum.sold;
+
+        return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.updateEntityViaPostAndFormData(BASE_URI + nonExistentPetID, formData, HttpStatus.SC_NOT_FOUND));
     }
 
     /**

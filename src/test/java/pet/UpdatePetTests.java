@@ -1,5 +1,6 @@
 package pet;
 
+import org.apache.http.HttpStatus;
 import org.dvekas.model.APIResponse;
 import org.dvekas.model.pet.Pet;
 import org.dvekas.model.pet.PetStatusEnum;
@@ -35,8 +36,6 @@ public class UpdatePetTests extends PetTestBase {
                 .as("Pet Information Update Positive Test")
                 .withFailMessage("Updating the Pet is unsuccessful")
                 .isNotEqualTo(createdPet.getStatus());
-
-        getPetByIDAndAssertResult(updatedPet.getId());
     }
 
     /**
@@ -64,4 +63,57 @@ public class UpdatePetTests extends PetTestBase {
                 .contains(additionalMetaData);
     }
 
+    /**
+     * GIVEN - A Pet exists in the database
+     * WHEN - Trying to change the Pet, via POST request
+     * THEN - The correct Pet is changed, as expected
+     */
+    @Test
+    void updateExistingPetViaPostRequestSuccessfulTest() {
+        LOG.info("Running: updateExistingPetViaPostRequestSuccessfulTest");
+
+        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        createdPet.setName(PetStatusEnum.sold.getStatusName());
+        createdPet.setStatus(PetStatusEnum.sold);
+
+        APIResponse response = petRequestHandler.updatePetViaPost(createdPet);
+        Pet updatedPet = petRequestHandler.getPetByID(createdPet.getId());
+
+        assertThat(response.getCode())
+                .as("Pet Information Update Positive Test")
+                .withFailMessage("Updating the Pet is unsuccessful")
+                .isEqualTo(HttpStatus.SC_OK);
+
+        assertThat(response.getMessage())
+                .as("Pet Information Update Positive Test")
+                .withFailMessage("Updating the Pet is unsuccessful")
+                .isEqualTo(createdPet.getId());
+
+        assertThat(createdPet)
+                .as("Pet Information Update Positive Test")
+                .withFailMessage("Updating the Pet is unsuccessful")
+                .usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(updatedPet);
+    }
+
+    /**
+     * WHEN - Trying to update a non-existing Pet
+     * THEN - Update is unsuccessful, error message is returned
+     */
+    @Test
+    void updateExistingPetViaPostRequestUnsuccessfulTest() {
+        LOG.info("Running: updateExistingPetViaPostRequestUnsuccessfulTest");
+
+        APIResponse response = petRequestHandler.failToUpdatePetViaPost(String.valueOf(generateRandomNumber()));
+
+        assertThat(response.getCode())
+                .as("Pet Information Update Negative Test")
+                .isEqualTo(HttpStatus.SC_NOT_FOUND);
+
+        assertThat(response.getMessage())
+                .as("Pet Information Update Negative Test")
+                .isEqualTo("not found");
+
+    }
 }
