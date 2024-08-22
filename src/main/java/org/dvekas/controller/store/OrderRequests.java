@@ -1,10 +1,14 @@
 package org.dvekas.controller.store;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.dvekas.controller.REST.RequestController;
 import org.dvekas.controller.ApiResponseMapper;
 import org.dvekas.model.APIResponse;
 import org.dvekas.model.store.Order;
+
+import java.io.IOException;
 
 public class OrderRequests {
     static String BASE_URI = "https://petstore.swagger.io/v2/store/order/";
@@ -19,7 +23,7 @@ public class OrderRequests {
     public Order getOrderByID(String orderID) {
         requestController = new RequestController();
 
-        return new OrderMapper().mapOrderFromResponse(requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_OK));
+        return mapOrderFromResponse(requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_OK));
     }
 
     /**
@@ -43,7 +47,7 @@ public class OrderRequests {
     public Order createNewOrder(Order orderToCreate) {
         requestController = new RequestController();
 
-        return new OrderMapper().mapOrderFromResponse(requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_OK));
+        return mapOrderFromResponse(requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_OK));
     }
 
     /**
@@ -80,4 +84,24 @@ public class OrderRequests {
 
         return new ApiResponseMapper().mapAPIResponseFromResponse(requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND));
     }
+
+    /**
+     * Creates an Order object, from the body of the given Response object.
+     *
+     * @param response Response object, with a pet's data in the body, as JSON.
+     * @return The created Order object.
+     */
+    private Order mapOrderFromResponse(Response response) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Order order;
+
+        try {
+            order = objectMapper.readValue(response.getBody().asPrettyString(), Order.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return order;
+    }
+
 }

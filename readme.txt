@@ -12,8 +12,12 @@ There are multiple ways to run the tests:
             * all tests run with "mvn clean install" by default
             * running all the tests directly: "mvn test -DxmlFilePath=src/testng.xml"
             * running the Pet test suite only: "mvn test -DxmlFilePath=src/testSuites/petSuite.xml"
+            * running the Order test suite only: "mvn test -DxmlFilePath=src/testSuites/orderSuite.xml"
 
 "mvn clean install" is needed before running any tests.
+To run without tests use: "mvn clean install -DskipTests".
+You will need to install the Lombok extension to your IDE, or it will have issues with the code.
+            You will be able to build and run the code it without it.
 
 Used technologies:
     - language: Java (version: 22.01)

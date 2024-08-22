@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PetTestBase {
 
     protected static final Logger LOG = LogManager.getLogger(RequestHandler.class);
-    protected static final String petYamlFilePath = "src/test/resources/testdata/yaml/TestPetData.yaml";
+    protected static final String petYamlFilePath = "src/test/resources/testData/yaml/TestPetData.yaml";
 
     protected PetRequests petRequestHandler;
     protected Pet petToBeCreated;

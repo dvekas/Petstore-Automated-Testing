@@ -1,7 +1,7 @@
 category:
     id: 1
     name: dog
-name: Dogmeat,
+name: Dogmeat
 tags:
   - id: 1
     name: Medical Tag

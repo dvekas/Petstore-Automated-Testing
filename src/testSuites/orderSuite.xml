@@ -2,7 +2,9 @@
 <suite name="Order-Suite" >
     <test name="PetStore - Order Tests" >
         <classes>
-            <class name="store.CreateGetDeleteOrderTests" />
+            <class name="store.CreateOrderTests" />
+            <class name="store.GetOrderTests" />
+            <class name="store.DeleteOrderTests" />
         </classes>
     </test>
 </suite>

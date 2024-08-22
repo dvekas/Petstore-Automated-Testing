@@ -36,6 +36,8 @@ public class UpdatePetTests extends PetTestBase {
                 .as("Pet Information Update Positive Test")
                 .withFailMessage("Updating the Pet is unsuccessful")
                 .isNotEqualTo(createdPet.getStatus());
+
+        getPetByIDAndAssertResult(updatedPet.getId());
     }
 
     /**
