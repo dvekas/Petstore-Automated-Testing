@@ -39,6 +39,7 @@ public class PetRequests {
      */
     public List<Pet> getPetsByStatus(PetStatusEnum petStatus) {
         String findByStatusURI = "findByStatus?status=";
+        requestController = new RequestController();
         ObjectMapper objectMapper = new ObjectMapper();
         List<Pet> pets;
 

@@ -1,12 +1,12 @@
 package store;
 
+import org.dvekas.controller.pet.PetRequests;
 import org.dvekas.model.pet.PetStatusEnum;
 import org.dvekas.model.store.Order;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,18 +39,23 @@ public class RequestOrderTests extends OrderBaseTests {
 
     /**
      * WHEN - Requesting a map of pet statuses to quantities
-     * THEN - The requested map is returned, and contains the correct statuses
+     * THEN - The requested map is returned, and contains the correct statuses, quantities
      */
     @Test
     void getInventorySuccessfulTest() {
         LOG.info("Running: getInventorySuccessfulTest");
 
-        List<String> petStatusList = Stream.of(PetStatusEnum.values())
-                                        .map(PetStatusEnum::name)
-                                        .toList();
+        PetRequests petRequestHandler = new PetRequests();
+        Map<String,Integer> expectedInventory = new HashMap<>();
+        PetStatusEnum.stream().forEach(statusEnum -> {
+            expectedInventory.put(statusEnum.getStatusName(), petRequestHandler.getPetsByStatus(statusEnum).size());
+        });
+
         Map<String,Integer> inventory = orderRequestHandler.getInventoryList();
 
-        assertThat(inventory.keySet().containsAll(petStatusList)).isTrue();
+        assertThat(inventory.entrySet().containsAll(expectedInventory.entrySet()))
+                .as("Downloading Inventory State Positive Test")
+                .isTrue();
     }
 
 }
