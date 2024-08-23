@@ -1,5 +1,6 @@
 package org.dvekas.controller.store;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -9,10 +10,34 @@ import org.dvekas.model.APIResponse;
 import org.dvekas.model.store.Order;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class OrderRequests {
     static String BASE_URI = "https://petstore.swagger.io/v2/store/order/";
     RequestController requestController;
+
+    /**
+     * Requests and returns a map of pet status codes to quantities.
+     *
+     * @return A map of pet status codes to quantities.
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String,Integer> getInventoryList() {
+
+        Map<String,Integer> result;
+        ObjectMapper objectMapper = new ObjectMapper();
+        requestController = new RequestController();
+
+        String responseBody = requestController.getEntity("https://petstore.swagger.io/v2/store/inventory", HttpStatus.SC_OK).body().asPrettyString();
+
+        try {
+            result = objectMapper.readValue(responseBody, Map.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
 
     /**
      * Requests an Order object from the API.

@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RequestPetTests  extends PetTestBase {
+public class RequestPetTests extends PetTestBase {
 
     /**
      * GIVEN - A Pet exists in the database

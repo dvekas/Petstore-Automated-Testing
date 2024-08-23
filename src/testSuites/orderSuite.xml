@@ -3,7 +3,7 @@
     <test name="PetStore - Order Tests" >
         <classes>
             <class name="store.CreateOrderTests" />
-            <class name="store.GetOrderTests" />
+            <class name="store.RequestOrderTests" />
             <class name="store.DeleteOrderTests" />
         </classes>
     </test>

@@ -20,9 +20,9 @@ You will need to install the Lombok extension to your IDE, or it will have issue
             You will be able to build and run the code it without it.
 
 Used technologies:
-    - language: Java (version: 22.01)
-    - build tool: Maven (version: 3.9.6)
-    - test framework: TestNG (version: 7.10.2)
+    - Language: Java (version: 22.01)
+    - Build Tool: Maven (version: 3.9.6)
+    - Test Framework: TestNG (version: 7.10.2)
     - AssertJ (version: 3.26.0)
     - Jackson Databind (version: 2.17.2)
     - Log4j (version: 2.23.1)
