@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreateOrderTests extends OrderBaseTests {
+public class CreateOrderTests extends OrderTestBase {
 
     /**
      * WHEN - Trying to create a new Order, via an API call

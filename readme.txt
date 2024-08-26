@@ -8,11 +8,14 @@ There are multiple ways to run the tests:
     - Run the test suite from testng xml files, in the IDE:
             * src/testng.xml
             * src/testSuites/petSuite.xml
+            * src/testSuites/orderSuite.xml
+            * src/testSuites/userSuite.xml
     - Run with Maven command:
             * all tests run with "mvn clean install" by default
             * running all the tests directly: "mvn test -DxmlFilePath=src/testng.xml"
             * running the Pet test suite only: "mvn test -DxmlFilePath=src/testSuites/petSuite.xml"
             * running the Order test suite only: "mvn test -DxmlFilePath=src/testSuites/orderSuite.xml"
+            * running the Order test suite only: "mvn test -DxmlFilePath=src/testSuites/userSuite.xml"
 
 "mvn clean install" is needed before running any tests.
 To run without tests use: "mvn clean install -DskipTests".

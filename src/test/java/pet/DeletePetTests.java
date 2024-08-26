@@ -18,7 +18,7 @@ public class DeletePetTests extends PetTestBase {
     void deleteExistingPetSuccessfulTest() {
         LOG.info("Running: deleteExistingPetSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
         APIResponse response = petRequestHandler.deletePet(createdPet);
 
         assertThat(response.getCode())

@@ -21,16 +21,16 @@ public class UpdatePetTests extends PetTestBase {
     void updateExistingPetSuccessfulTest() {
         LOG.info("Running: updateExistingPetSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
-        petToBeCreated.setStatus(PetStatusEnum.sold);
-        Pet updatedPet = petRequestHandler.updatePet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
+        petToCreate.setStatus(PetStatusEnum.sold);
+        Pet updatedPet = petRequestHandler.updatePet(petToCreate);
 
         assertThat(updatedPet)
                 .as("Pet Information Update Positive Test")
                 .withFailMessage("Updating the Pet is unsuccessful")
                 .usingRecursiveComparison()
                 .ignoringFields("id")
-                .isEqualTo(petToBeCreated);
+                .isEqualTo(petToCreate);
 
         assertThat(updatedPet.getStatus())
                 .as("Pet Information Update Positive Test")
@@ -47,7 +47,7 @@ public class UpdatePetTests extends PetTestBase {
      */
     @Test
     void updateExistingPetWithImageSuccessfulTest() {
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
         File file = new File("src/test/resources/testdata/pictures/dogmeat_picture.jpg");
         String additionalMetaData = "picture";
 
@@ -74,7 +74,7 @@ public class UpdatePetTests extends PetTestBase {
     void updateExistingPetViaPostRequestSuccessfulTest() {
         LOG.info("Running: updateExistingPetViaPostRequestSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
         createdPet.setName(PetStatusEnum.sold.getStatusName());
         createdPet.setStatus(PetStatusEnum.sold);
 

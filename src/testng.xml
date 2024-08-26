@@ -3,6 +3,7 @@
     <suite-files>
         <suite-file path="testSuites/petSuite.xml" />
         <suite-file path="testSuites/orderSuite.xml" />
+        <suite-file path="testSuites/userSuite.xml" />
     </suite-files>
 </suite>
 

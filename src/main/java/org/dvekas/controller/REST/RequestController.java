@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 
 import java.io.File;
+import java.util.Map;
 
 public class RequestController {
 
@@ -16,8 +17,8 @@ public class RequestController {
      * @param expectedStatusCode The status code, that should be returned from the API.
      * @return The Response object, from the request.
      */
-    public Response getEntity(String URL, int expectedStatusCode) {
-        return new RequestHandler().sendGetRequest(URL, expectedStatusCode);
+    public Response getEntity(String URL, int expectedStatusCode, Map<String, String> extraHeaders) {
+        return new RequestHandler().sendGetRequest(URL, expectedStatusCode, extraHeaders);
     }
 
     /**
