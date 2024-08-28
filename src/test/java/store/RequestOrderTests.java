@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RequestOrderTests extends OrderBaseTests {
+public class RequestOrderTests extends OrderTestBase {
 
     /**
      * GIVEN - An Order exist in the database

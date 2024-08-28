@@ -1,13 +1,20 @@
 package org.dvekas.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+@Setter
+@NoArgsConstructor
 public class APIResponse {
+
+    @JsonProperty("code")
     int code;
+    @JsonProperty("type")
     String type;
+    @JsonProperty("message")
     String message;
 
 }

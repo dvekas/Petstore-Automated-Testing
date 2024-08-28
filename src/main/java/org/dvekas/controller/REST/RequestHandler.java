@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -21,12 +23,17 @@ public class RequestHandler {
      * @param expectedStatusCode The status code, that should be returned from the API.
      * @return The Response object, from the request.
      */
-    public Response sendGetRequest(String URI, int expectedStatusCode) {
+    public Response sendGetRequest(String URI, int expectedStatusCode, Map<String, String> extraHeaders) {
         logRequest(Method.GET, URI, null);
+
+        if (extraHeaders == null) {
+            extraHeaders = new HashMap<>();
+        }
 
         Response response =
                 given()
                         .headers("Content-Type", "application/json")
+                        .headers(extraHeaders)
                 .when()
                         .get(URI)
                 .then()
@@ -151,4 +158,5 @@ public class RequestHandler {
             LOG.info("Request Body: {}", requestBody);
         }
     }
+
 }

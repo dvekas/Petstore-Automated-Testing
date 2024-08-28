@@ -18,7 +18,7 @@ public class RequestPetTests extends PetTestBase {
     void getPetByIDSuccessfulTest() {
         LOG.info("Running: getPetByIDSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
 
         getPetByIDAndAssertResult(createdPet.getId());
     }
@@ -44,7 +44,7 @@ public class RequestPetTests extends PetTestBase {
     void getPetByStatusSuccessfulTest() {
         LOG.info("Running: getPetByStatusSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
         List<Pet> pets = petRequestHandler.getPetsByStatus(createdPet.getStatus());
 
         boolean doesListContainCreatedPet = pets.stream().
@@ -56,7 +56,6 @@ public class RequestPetTests extends PetTestBase {
 
         assertThat(doesListContainCreatedPet)
                 .as("Get Pets By Status Successful Test")
-                .withFailMessage("Created Pet is not found in List")
                 .isTrue();
     }
 

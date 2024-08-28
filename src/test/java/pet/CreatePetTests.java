@@ -17,14 +17,13 @@ public class CreatePetTests extends PetTestBase {
     void createNewPetSuccessfulTest() {
         LOG.info("Running: createNewPetSuccessfulTest");
 
-        Pet createdPet = petRequestHandler.createNewPet(petToBeCreated);
+        Pet createdPet = petRequestHandler.createNewPet(petToCreate);
 
         assertThat(createdPet)
                 .as("Pet Creation Positive Test")
-                .withFailMessage("Creation of new Pet is unsuccessful")
                 .usingRecursiveComparison()
                 .ignoringFields("id")
-                .isEqualTo(petToBeCreated);
+                .isEqualTo(petToCreate);
 
         getPetByIDAndAssertResult(createdPet.getId());
     }
@@ -37,8 +36,8 @@ public class CreatePetTests extends PetTestBase {
     void createNewPetUnsuccessfulTest() {
         LOG.info("Running: createNewPetUnsuccessfulTest");
 
-        petToBeCreated.setId("ERROR");
-        APIResponse response = petRequestHandler.failToCreatePet(petToBeCreated);
+        petToCreate.setId("ERROR");
+        APIResponse response = petRequestHandler.failToCreatePet(petToCreate);
 
         assertThat(response.getCode()).as("Pet Creation Negative Test").isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         assertThat(response.getMessage()).as("Pet Creation Negative Test").isEqualTo("something bad happened");

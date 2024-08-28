@@ -1,24 +1,22 @@
 package store;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dvekas.controller.REST.RequestHandler;
+import org.dvekas.controller.CustomObjectMapper;
 import org.dvekas.controller.store.OrderRequests;
 import org.dvekas.model.APIResponse;
 import org.dvekas.model.store.Order;
 import org.testng.annotations.BeforeMethod;
+import pet.PetTestBase;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OrderBaseTests {
+public class OrderTestBase {
 
-    protected static final Logger LOG = LogManager.getLogger(RequestHandler.class);
+    protected static final Logger LOG = LogManager.getLogger(PetTestBase.class);
     protected static final String orderYamlFilePath = "src/test/resources/testData/yaml/TestOrderData.yaml";
 
     Order orderToCreate;
@@ -29,14 +27,8 @@ public class OrderBaseTests {
      */
     @BeforeMethod
     void setUpTestData() {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-
-        try {
-            orderToCreate = mapper.readValue(new File(orderYamlFilePath), Order.class);
-            orderToCreate.setPetId(generateRandomID());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+        orderToCreate = customObjectMapper.mapObjectFromYaml(new File(orderYamlFilePath), Order.class);
 
         orderRequestHandler = new OrderRequests();
     }
