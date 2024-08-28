@@ -30,7 +30,10 @@ public class PetRequests {
      * @return The requested Pet, from the response body of the API call.
      */
     public Pet getPetByID(String petID) {
-        return customObjectMapper.mapObjectFromResponse(requestController.getEntity(BASE_URI + petID, HttpStatus.SC_OK, null), Pet.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.getEntity(BASE_URI + petID, HttpStatus.SC_OK, null),
+                Pet.class
+        );
     }
 
     /**
@@ -40,12 +43,12 @@ public class PetRequests {
      * @return List of Pet objects.
      */
     public List<Pet> getPetsByStatus(PetStatusEnum petStatus) {
-        String findByStatusURI = "findByStatus?status=";
 
+        String URI = BASE_URI + "findByStatus?status=" + petStatus.getStatusName();
         ObjectMapper objectMapper = new ObjectMapper();
         List<Pet> pets;
 
-        String responseBody = requestController.getEntity(BASE_URI + findByStatusURI + petStatus.getStatusName(),HttpStatus.SC_OK, null).getBody().asPrettyString();
+        String responseBody = requestController.getEntity(URI,HttpStatus.SC_OK, null).getBody().asPrettyString();
 
         try {
             pets = Arrays.asList(objectMapper.readValue(responseBody, Pet[].class));
@@ -63,7 +66,10 @@ public class PetRequests {
      * @return API response object.
      */
     public APIResponse getNonExistentPetByID(String petID) {
-        return customObjectMapper.mapObjectFromResponse(requestController.getEntity(BASE_URI + petID, HttpStatus.SC_NOT_FOUND, null), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.getEntity(BASE_URI + petID, HttpStatus.SC_NOT_FOUND, null),
+                APIResponse.class
+        );
     }
 
     /**
@@ -73,7 +79,10 @@ public class PetRequests {
      * @return The created Pet, from the response bod.y of the API call.
      */
     public Pet createNewPet(Pet petToCreate) {
-        return customObjectMapper.mapObjectFromResponse(requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_OK), Pet.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_OK),
+                Pet.class
+        );
     }
 
     /**
@@ -83,7 +92,10 @@ public class PetRequests {
      * @return API response object.
      */
     public APIResponse failToCreatePet(Pet petToCreate) {
-        return customObjectMapper.mapObjectFromResponse(requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.createNewEntity(BASE_URI, petToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR),
+                APIResponse.class
+        );
     }
 
     /**
@@ -95,7 +107,10 @@ public class PetRequests {
      * @return API response object.
      */
     public APIResponse uploadPictureToPet(String petID, File file, String additionalMetaData) {
-        return customObjectMapper.mapObjectFromResponse(requestController.uploadFile(BASE_URI + petID + "/uploadImage", file, HttpStatus.SC_OK, additionalMetaData), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.uploadFile(BASE_URI + petID + "/uploadImage", file, HttpStatus.SC_OK, additionalMetaData),
+                APIResponse.class
+        );
     }
 
     /**
@@ -105,7 +120,10 @@ public class PetRequests {
      * @return The created or updated Pet, from the response body of the API call.
      */
     public Pet updatePet(Pet petToUpdate) {
-        return customObjectMapper.mapObjectFromResponse(requestController.createOrUpdateEntity(BASE_URI, petToUpdate, HttpStatus.SC_OK), Pet.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.createOrUpdateEntity(BASE_URI, petToUpdate, HttpStatus.SC_OK),
+                Pet.class
+        );
     }
 
     /**
@@ -117,7 +135,10 @@ public class PetRequests {
     public APIResponse updatePetViaPost(Pet petToUpdate) {
         String formData = "name=" + petToUpdate.getName() + "&status=" + petToUpdate.getStatus().getStatusName();
 
-        return customObjectMapper.mapObjectFromResponse(requestController.updateEntityViaPostAndFormData(BASE_URI + petToUpdate.getId(), formData, HttpStatus.SC_OK), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.updateEntityViaPostAndFormData(BASE_URI + petToUpdate.getId(), formData, HttpStatus.SC_OK),
+                APIResponse.class
+        );
     }
 
     /**
@@ -129,7 +150,10 @@ public class PetRequests {
     public APIResponse failToUpdatePetViaPost(String nonExistentPetID) {
         String formData = "name=ERROR&status=" + PetStatusEnum.sold;
 
-        return customObjectMapper.mapObjectFromResponse(requestController.updateEntityViaPostAndFormData(BASE_URI + nonExistentPetID, formData, HttpStatus.SC_NOT_FOUND), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.updateEntityViaPostAndFormData(BASE_URI + nonExistentPetID, formData, HttpStatus.SC_NOT_FOUND),
+                APIResponse.class
+        );
     }
 
     /**
@@ -139,7 +163,10 @@ public class PetRequests {
      * @return API response object.
      */
     public APIResponse deletePet(Pet petToDelete) {
-        return customObjectMapper.mapObjectFromResponse(requestController.deleteEntity(BASE_URI + petToDelete.getId(), HttpStatus.SC_OK), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.deleteEntity(BASE_URI + petToDelete.getId(), HttpStatus.SC_OK),
+                APIResponse.class
+        );
     }
 
     /**

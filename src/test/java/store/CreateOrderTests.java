@@ -39,8 +39,13 @@ public class CreateOrderTests extends OrderTestBase {
         orderToCreate.setId("ERROR");
         APIResponse response = orderRequestHandler.failToCreateOrder(orderToCreate);
 
-        assertThat(response.getCode()).as("Order Creation Negative Test").isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-        assertThat(response.getMessage()).as("Order Creation Negative Test").isEqualTo("something bad happened");
+        assertThat(response.getCode())
+                .as("Order Creation Negative Test")
+                .isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+
+        assertThat(response.getMessage())
+                .as("Order Creation Negative Test")
+                .isEqualTo("something bad happened");
     }
 
 }

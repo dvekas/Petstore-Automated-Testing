@@ -48,7 +48,10 @@ public class OrderRequests {
      * @return The requested Order, from the response body of the API call
      */
     public Order getOrderByID(String orderID) {
-        return customObjectMapper.mapObjectFromResponse(requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_OK, null), Order.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_OK, null),
+                Order.class
+        );
     }
 
     /**
@@ -58,7 +61,10 @@ public class OrderRequests {
      * @return The requested Order, from the response body of the API call
      */
     public APIResponse getNonExistentOrderByID(String orderID) {
-        return customObjectMapper.mapObjectFromResponse(requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND, null), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.getEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND, null),
+                APIResponse.class
+        );
     }
 
     /**
@@ -68,7 +74,10 @@ public class OrderRequests {
      * @return The created Order, from the response body of the API call
      */
     public Order createNewOrder(Order orderToCreate) {
-        return customObjectMapper.mapObjectFromResponse(requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_OK), Order.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_OK),
+                Order.class
+        );
     }
 
     /**
@@ -78,7 +87,10 @@ public class OrderRequests {
      * @return The created Order, from the response body of the API call
      */
     public APIResponse failToCreateOrder(Order orderToCreate) {
-        return customObjectMapper.mapObjectFromResponse(requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.createNewEntity(BASE_URI, orderToCreate, HttpStatus.SC_INTERNAL_SERVER_ERROR),
+                APIResponse.class
+        );
     }
 
     /**
@@ -88,7 +100,10 @@ public class OrderRequests {
      * @return API response object
      */
     public APIResponse deleteOrder(Order orderToDelete) {
-        return customObjectMapper.mapObjectFromResponse(requestController.deleteEntity(BASE_URI + orderToDelete.getId(), HttpStatus.SC_OK), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.deleteEntity(BASE_URI + orderToDelete.getId(), HttpStatus.SC_OK),
+                APIResponse.class
+        );
     }
 
     /**
@@ -97,7 +112,10 @@ public class OrderRequests {
      * @param orderID Non existent OrderID
      */
     public APIResponse failToDeleteOrder(String orderID) {
-        return customObjectMapper.mapObjectFromResponse(requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND), APIResponse.class);
+        return customObjectMapper.mapObjectFromResponse(
+                requestController.deleteEntity(BASE_URI + orderID, HttpStatus.SC_NOT_FOUND),
+                APIResponse.class
+        );
     }
 
 }

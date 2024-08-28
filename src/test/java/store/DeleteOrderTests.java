@@ -20,8 +20,15 @@ public class DeleteOrderTests extends OrderTestBase {
         Order createdOrder = orderRequestHandler.createNewOrder(orderToCreate);
 
         APIResponse response = orderRequestHandler.deleteOrder(createdOrder);
-        assertThat(response.getCode()).as("Order deletion Positive Test").isEqualTo(HttpStatus.SC_OK);
-        assertThat(response.getMessage()).as("Order deletion Positive Test").isEqualTo(createdOrder.getId());
+
+        assertThat(response.getCode())
+                .as("Order deletion Positive Test")
+                .isEqualTo(HttpStatus.SC_OK);
+
+        assertThat(response.getMessage())
+                .as("Order deletion Positive Test")
+                .isEqualTo(createdOrder.getId());
+
         getNonExistentOrderByIDAndAssertResponse(createdOrder.getId());
     }
 
@@ -34,8 +41,14 @@ public class DeleteOrderTests extends OrderTestBase {
         LOG.info("Running: deleteOrderUnsuccessfulTest");
 
         APIResponse response = orderRequestHandler.failToDeleteOrder(String.valueOf(generateRandomID()));
-        assertThat(response.getCode()).as("Order deletion Positive Test").isEqualTo(HttpStatus.SC_NOT_FOUND);
-        assertThat(response.getMessage()).as("Order deletion Positive Test").isEqualTo("Order Not Found");
+
+        assertThat(response.getCode())
+                .as("Order deletion Positive Test")
+                .isEqualTo(HttpStatus.SC_NOT_FOUND);
+
+        assertThat(response.getMessage())
+                .as("Order deletion Positive Test")
+                .isEqualTo("Order Not Found");
     }
 
 }

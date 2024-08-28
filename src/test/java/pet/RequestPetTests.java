@@ -56,7 +56,6 @@ public class RequestPetTests extends PetTestBase {
 
         assertThat(doesListContainCreatedPet)
                 .as("Get Pets By Status Successful Test")
-                .withFailMessage("Created Pet is not found in List")
                 .isTrue();
     }
 

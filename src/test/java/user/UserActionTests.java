@@ -20,8 +20,13 @@ public class UserActionTests extends UserTestBase{
 
          APIResponse response = userRequestHandler.logInUser(userToCreate.getUsername(), userToCreate.getPassword());
 
-         assertThat(response.getCode()).isEqualTo(HttpStatus.SC_OK);
-         assertThat(response.getMessage().contains("logged in user session:")).isTrue();
+         assertThat(response.getCode())
+                 .as("LogIn User Positive Test")
+                 .isEqualTo(HttpStatus.SC_OK);
+
+         assertThat(response.getMessage().contains("logged in user session:"))
+                 .as("LogIn User Positive Test")
+                 .isTrue();
     }
 
     /**
@@ -34,8 +39,12 @@ public class UserActionTests extends UserTestBase{
 
         APIResponse response = userRequestHandler.logOutUser();
 
-        assertThat(response.getCode()).isEqualTo(HttpStatus.SC_OK);
-        assertThat(response.getMessage()).isEqualTo("ok");
+        assertThat(response.getCode())
+                .as("LogOut User Positive Test")
+                .isEqualTo(HttpStatus.SC_OK);
+        assertThat(response.getMessage())
+                .as("LogOut User Positive Test")
+                .isEqualTo("ok");
     }
 
 }

@@ -21,7 +21,6 @@ public class CreatePetTests extends PetTestBase {
 
         assertThat(createdPet)
                 .as("Pet Creation Positive Test")
-                .withFailMessage("Creation of new Pet is unsuccessful")
                 .usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(petToCreate);

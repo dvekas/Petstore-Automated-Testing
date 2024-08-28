@@ -27,14 +27,12 @@ public class UpdatePetTests extends PetTestBase {
 
         assertThat(updatedPet)
                 .as("Pet Information Update Positive Test")
-                .withFailMessage("Updating the Pet is unsuccessful")
                 .usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(petToCreate);
 
         assertThat(updatedPet.getStatus())
                 .as("Pet Information Update Positive Test")
-                .withFailMessage("Updating the Pet is unsuccessful")
                 .isNotEqualTo(createdPet.getStatus());
 
         getPetByIDAndAssertResult(updatedPet.getId());
@@ -56,12 +54,10 @@ public class UpdatePetTests extends PetTestBase {
 
         assertThat(response.getMessage())
                 .as("Picture Upload Positive Test")
-                .withFailMessage("Uploading picture is unsuccessful.")
                 .contains(file.getName());
 
         assertThat(response.getMessage())
                 .as("Picture Upload Positive Test")
-                .withFailMessage("Uploading picture is unsuccessful.")
                 .contains(additionalMetaData);
     }
 
@@ -83,17 +79,14 @@ public class UpdatePetTests extends PetTestBase {
 
         assertThat(response.getCode())
                 .as("Pet Information Update Positive Test")
-                .withFailMessage("Updating the Pet is unsuccessful")
                 .isEqualTo(HttpStatus.SC_OK);
 
         assertThat(response.getMessage())
                 .as("Pet Information Update Positive Test")
-                .withFailMessage("Updating the Pet is unsuccessful")
                 .isEqualTo(createdPet.getId());
 
         assertThat(createdPet)
                 .as("Pet Information Update Positive Test")
-                .withFailMessage("Updating the Pet is unsuccessful")
                 .usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(updatedPet);
@@ -118,4 +111,5 @@ public class UpdatePetTests extends PetTestBase {
                 .isEqualTo("not found");
 
     }
+
 }

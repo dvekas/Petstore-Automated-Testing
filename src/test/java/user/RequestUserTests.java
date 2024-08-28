@@ -19,7 +19,7 @@ public class RequestUserTests extends UserTestBase {
 
         userRequestHandler.createNewUser(userToCreate);
 
-        getUserByUsernameAndAssertResult(userToCreate.getUsername());
+        getUserByUsernameAndAssertResult(userToCreate.getUsername(), userToCreate);
     }
 
     /**
@@ -32,7 +32,9 @@ public class RequestUserTests extends UserTestBase {
 
         APIResponse response = userRequestHandler.getNonExistentUser("3RR0R");
 
-        assertThat(response.getMessage()).isEqualTo("User not found");
+        assertThat(response.getMessage())
+                .as("Get User By Username Negative Test")
+                .isEqualTo("User not found");
     }
 
 }

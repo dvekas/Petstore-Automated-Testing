@@ -23,12 +23,10 @@ public class DeletePetTests extends PetTestBase {
 
         assertThat(response.getCode())
                 .as("Pet Deletion Positive Test")
-                .withFailMessage("Pet Deletion Unsuccessful")
                 .isEqualTo(HttpStatus.SC_OK);
 
         assertThat(response.getMessage())
                 .as("Pet Deletion Positive Test")
-                .withFailMessage("Pet Deletion Unsuccessful")
                 .isEqualTo(String.valueOf(createdPet.getId()));
 
         getNonExistentPetAndAssertResult(createdPet.getId());
